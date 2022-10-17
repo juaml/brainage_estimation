@@ -1,4 +1,5 @@
-from read_data_mask_resampled import *
+#from read_data_mask_resampled import *
+from brainage import read_sub_data
 from julearn.transformers import register_transformer
 from pathlib import Path
 import pandas as pd
