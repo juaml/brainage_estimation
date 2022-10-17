@@ -1,5 +1,5 @@
 1. **Folder Structure**
-`brainage_requirements_models` contains following folders and files:
+There are following folders and files:
    
    1. `trained_models`: contains 10 trained models. Models are trained using voxel-wise GM images (from CAT 12.8) with additional smoothing (S0, S4, S8) and resampling (R4, R8) as features with various ML algorithms
    
@@ -15,7 +15,7 @@
    
 2. **codes**
    
-   1. `predict_age.py`: This is main file for predicting age. It takes in 8 arguments
+1. `predict_age.py`: This is main file for predicting age. It takes in 8 arguments
       1. `features_path`: path to directory to save or load features(default=../data )
       2. `output_path`: path to results directory (default=../results )
       3. `output_filenm`: results filename extension (default='ADNI')
@@ -24,8 +24,20 @@
       6. `subject_filepaths`: Path to .csv or .txt file with test subject filepaths (default=../data/ADNI_paths_cat12.8.csv )
       7. `mask_dir`: Path to .nii file for the GM mask (default=../masks/brainmask_12.8.nii) 
       8. `model_file`: Path to trained model (default=../trained_models/4sites_S4_R4_pca.gauss.models)
+    
+2. `train_within_site.py`: Train within-site models
+    
+3.  `train_cross_site.py`: Train cross-site models
+
+4. `ixi.submit`
+
+5. `ixi_camcan_enki.submit`
+    
+6. `4sites_bestmodel.submit`
    
-   2. `read_data_mask_resampled.py`: called in predict_age.py to calculate features
+7. `read_data_mask_resampled.py`: called in predict_age.py to calculate features
+   
+   
 
 3.  **Create virtual enviornment**
 `cd brainage_requirements_models`
