@@ -35,9 +35,14 @@ There are following folders and files:
     
 6. `4sites_bestmodel.submit`
    
-7. `read_data_mask_resampled.py`: called in predict_age.py to calculate features
+
    
-   
+2. **brainage** 
+
+1. `read_data_mask_resampled.py`: called in predict_age.py to calculate features
+
+2.  `create_splits.py`
+
 
 3.  **Create virtual enviornment**
 `cd brainage_requirements_models`
