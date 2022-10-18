@@ -40,7 +40,7 @@ There are following folders and files:
    
 
 3.  **Create virtual enviornment**
-`cd brainage_requirements_models`
+`cd brainage_estimation`
 `python3 -m venv test_env`
 `source test_env/bin/activate` 
 `pip install -r requirements.txt`
