@@ -1,0 +1,231 @@
+# The environment
+universe       = vanilla
+getenv         = True
+
+# resources
+request_cpus   = 5
+request_memory = 10G
+
+
+# Execution
+initial_dir    = /data/project/brainage/brainage_julearn_final/codes_cross_site
+executable     = $(initial_dir)/run_in_venv.sh
+transfer_executable = False
+
+# Logs
+#log            = $(initial_dir)/logs/$(Cluster).$(Process).log
+#output         = $(initial_dir)/logs/$(Cluster).$(Process).out
+#error          = $(initial_dir)/logs/$(Cluster).$(Process).err
+
+log            = $(initial_dir)/logs/$(result).$(model).$(Cluster).$(Process).log
+output         = $(initial_dir)/logs/$(result).$(model).$(Cluster).$(Process).out
+error          = $(initial_dir)/logs/$(result).$(model).$(Cluster).$(Process).err
+
+# --models: 'ridge', 'rf', 'rvr_lin', 'kernel_ridge', 'gauss', 'lasso', 'elasticnet', 'rvr_poly', 'xgb'
+# --pca_status: 0 or 1
+
+
+arguments = test_env python3 brainage_prediction_across_data.py --data_path $(data_dir)/$(data) --output_path $(results_dir)/$(result) --models $(model) --test_data_path $(test_dir)/$(test_data) --confounds None --pca_status $(pca) --n_jobs 5
+
+data_dir = /data/project/brainage/brainage_julearn_final/data_new/ixi_camcan_enki
+results_dir = /data/project/brainage/brainage_julearn_final/results/ixi_camcan_enki
+test_dir = /data/project/brainage/brainage_julearn_final/data_new/1000brains/new
+
+########## S0_R4
+data = ixi_camcan_enki_S0_R4
+result = ixi_camcan_enki_S0_R4
+test_data = 1000brains_S0_R4
+pca = 0
+model = lasso
+queue
+
+
+########## S4_R4
+data = ixi_camcan_enki_S4_R4
+result = ixi_camcan_enki_S4_R4
+test_data = 1000brains_S4_R4
+pca = 0
+
+model = ridge
+#queue
+
+model = gauss
+#queue
+
+model = rvr_lin
+queue
+
+########## S4_R4_pca
+data = ixi_camcan_enki_S4_R4
+result = ixi_camcan_enki_S4_R4_pca
+test_data = 1000brains_S4_R4
+pca = 1
+
+model = rvr_lin
+#queue
+
+model = rf
+#queue
+
+model = gauss
+queue
+
+model = ridge
+queue
+
+
+########## S8_R4
+data = ixi_camcan_enki_S8_R4
+result = ixi_camcan_enki_S8_R4
+test_data = 1000brains_S8_R4
+pca = 0
+model = kernel_ridge
+queue
+
+
+########## S8_R4_pca
+data = ixi_camcan_enki_S8_R4
+result = ixi_camcan_enki_S8_R4_pca
+test_data = 1000brains_S8_R4
+pca = 1
+
+model = rvr_lin
+#queue
+
+model = gauss
+#queue
+
+model = lasso
+queue
+
+model = rvr_poly
+queue
+
+########## S0_R8
+data = ixi_camcan_enki_S0_R8
+result = ixi_camcan_enki_S0_R8
+test_data = 1000brains_S0_R8
+pca = 0
+model = rvr_poly
+queue
+
+
+########## S0_R8_pca
+data = ixi_camcan_enki_S0_R8
+result = ixi_camcan_enki_S0_R8_pca
+test_data = 1000brains_S0_R8
+pca = 1
+
+model = elasticnet
+#queue
+
+model = rvr_poly
+#queue
+
+model = lasso
+queue
+
+
+########## S4_R8
+data = ixi_camcan_enki_S4_R8
+result = ixi_camcan_enki_S4_R8
+test_data = 1000brains_S4_R8     
+pca = 0
+
+model = ridge
+#queue
+
+model = lasso
+queue
+
+model = rvr_lin
+queue
+
+
+
+########## S8_R8
+data = ixi_camcan_enki_S8_R8
+result = ixi_camcan_enki_S8_R8
+test_data = 1000brains_S8_R8
+pca = 0
+
+#model = kernel_ridge
+#queue
+
+#model = ridge
+#queue
+
+
+
+########## S8_R8_pca
+data = ixi_camcan_enki_S8_R8
+result = ixi_camcan_enki_S8_R8_pca
+test_data = 1000brains_S8_R8
+pca = 1
+model = elasticnet
+#queue
+
+
+
+########## 1273
+data = ixi_camcan_enki_1273
+result = ixi_camcan_enki_1273
+test_data = 1000brains_1273
+pca = 0
+
+#model = gauss
+#queue
+
+model = rvr_poly
+queue
+
+
+########## 873
+data = ixi_camcan_enki_873
+result = ixi_camcan_enki_873
+test_data = 1000brains_873
+pca = 0
+
+model = gauss
+queue
+
+model = elasticnet
+queue
+
+
+########## 473
+data = ixi_camcan_enki_473
+result = ixi_camcan_enki_473
+test_data = 1000brains_473
+pca = 0
+
+#model = rvr_poly
+#queue
+
+#model = lasso
+#queue
+
+
+########## 173
+data = ixi_camcan_enki_173
+result = ixi_camcan_enki_173
+test_data = 1000brains_173
+pca = 0
+
+#model = gauss
+#queue
+
+model = rf
+queue
+
+model = lasso
+queue
+
+
+
+
+
+
+
+
+
