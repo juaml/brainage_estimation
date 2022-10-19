@@ -28,8 +28,7 @@ There are following folders and files:
 6. `4sites_bestmodel.submit`
    
 
-   
-2. **brainage** 
+3. **brainage** 
 
 1. `read_data_mask_resampled.py`: called in predict_age.py to calculate features
 
