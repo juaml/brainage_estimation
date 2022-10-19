@@ -1,16 +1,16 @@
 1. **Folder Structure**
 There are following folders and files:
    
-   1. `trained_models`: contains 10 trained models. Models are trained using voxel-wise GM images (from CAT 12.8) with additional smoothing (S0, S4, S8) and resampling (R4, R8) as features with various ML algorithms
+1. `trained_models`: contains 10 trained models. Models are trained using voxel-wise GM images (from CAT 12.8) with additional smoothing (S0, S4, S8) and resampling (R4, R8) as features with various ML algorithms
    
-   2. `data`:
-      1. `ADNI_mri.tar.gz`: contains preprocessed .nii files for all ADNI subjects (go to `data` folder and run `tar -zxvf ADNI_mri.tar.gz` to get the .nii files)
-      2. `ADNI_paths_cat12.8.csv`: csv with path to .nii files of ADNI subjects
-      3. `ADNI_demographics.csv`: csv with demographic information for ADNI subjects as dowloaded from website
+2. `data`:
+   1. `ADNI_mri.tar.gz`: contains preprocessed .nii files for all ADNI subjects (go to `data` folder and run `tar -zxvf ADNI_mri.tar.gz` to get the .nii files)
+   2. `ADNI_paths_cat12.8.csv`: csv with path to .nii files of ADNI subjects
+   3. `ADNI_demographics.csv`: csv with demographic information for ADNI subjects as dowloaded from website
+  
+3. `codes`: contains two python script, details below.
    
-   3. `codes`: contains two python script, details below.
-   
-   4. `requirements.txt`: contains list of python packages to be installed
+4. `requirements.txt`: contains list of python packages to be installed
    
    
 2. **codes**
