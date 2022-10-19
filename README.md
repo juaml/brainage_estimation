@@ -15,15 +15,7 @@ There are following folders and files:
    
 2. **codes**
    
-1. `predict_age.py`: This is main file for predicting age. It takes in 8 arguments
-      1. `features_path`: path to directory to save or load features(default=../data )
-      2. `output_path`: path to results directory (default=../results )
-      3. `output_filenm`: results filename extension (default='ADNI')
-      4. `smooth_fwhm`: smoothing FWHM (default=4) 
-      5. `resample_size`: Resampling kernel size (default=4) 
-      6. `subject_filepaths`: Path to .csv or .txt file with test subject filepaths (default=../data/ADNI_paths_cat12.8.csv )
-      7. `mask_dir`: Path to .nii file for the GM mask (default=../masks/brainmask_12.8.nii) 
-      8. `model_file`: Path to trained model (default=../trained_models/4sites_S4_R4_pca.gauss.models)
+1. `predict_age.py`: This is main file for predicting age. It takes in 8 arguments: `features_path`: path to directory to save or load features(default=../data), `output_path`: path to results directory (default=../results ), `output_filenm`: results filename extension (default='ADNI'), `smooth_fwhm`: smoothing FWHM (default=4), `resample_size`: Resampling kernel size (default=4), `subject_filepaths`: Path to .csv or .txt file with test subject filepaths (default=../data/ADNI_paths_cat12.8.csv), `mask_dir`: Path to .nii file for the GM mask (default=../masks/brainmask_12.8.nii), `model_file`: Path to trained model (default=../trained_models/4sites_S4_R4_pca.gauss.models)
     
 2. `train_within_site.py`: Train within-site models
     
