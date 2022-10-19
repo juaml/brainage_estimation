@@ -61,8 +61,10 @@ Example-3:
 Calculates predictions using `S4_R4_pca+gauss` workflow
 
 2. **calculate features**
-3. **Train within-site models**
-4. **Train cross-site models**
-5. 
+python3 calculate_features.py ../data/ADNI/ ADNI 4 1 8 ../data/ADNI_paths_cat12.8.csv ../masks/brainmask_12.8.nii
+    
+4. **Train within-site models**
+5. **Train cross-site models**
+
 
 
