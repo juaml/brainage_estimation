@@ -59,3 +59,10 @@ Calculates predictions using `S4_R4_pca+rvr_lin` workflow
 Example-3:
 `python3 predict_age.py`
 Calculates predictions using `S4_R4_pca+gauss` workflow
+
+2. **calculate features**
+3. **Train within-site models**
+4. **Train cross-site models**
+5. 
+
+
