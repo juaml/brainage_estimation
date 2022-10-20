@@ -13,19 +13,19 @@ executable     = $(initial_dir)/run_in_venv.sh
 transfer_executable = False
 
 # Logs
-#log            = $(initial_dir)/logs/$(Cluster).$(Process).log
-#output         = $(initial_dir)/logs/$(Cluster).$(Process).out
-#error          = $(initial_dir)/logs/$(Cluster).$(Process).err
+#log            = $(initial_dir)/../logs/$(Cluster).$(Process).log
+#output         = $(initial_dir)/../logs/$(Cluster).$(Process).out
+#error          = $(initial_dir)/../logs/$(Cluster).$(Process).err
 
-log            = $(initial_dir)/logs/$(result).$(model).log
-output         = $(initial_dir)/logs/$(result).$(model).out
-error          = $(initial_dir)/logs/$(result).$(model).err
+log            = $(initial_dir)/../logs/$(result).$(model).log
+output         = $(initial_dir)/../logs/$(result).$(model).out
+error          = $(initial_dir)/../logs/$(result).$(model).err
 
 # --models: 'ridge', 'rf', 'rvr_lin', 'kernel_ridge', 'gauss', 'lasso', 'elasticnet', 'rvr_poly', 'xgb'
 # --pca_status: 0 or 1
 
 
-arguments = brainage_env python3 brainage_prediction.py --demo_path ../data/ixi/ixi_subject_list_cat12.8.csv --data_path /data/project/brainage/brainage_julearn_final/data_new/ixi/$(data) --output_filenm ixi/$(result) --models $(model) --pca_status $(pca)
+arguments = test_package_env python3 within_site_train.py --demo_path ../data/ixi/ixi_subject_list_cat12.8.csv --data_path ../data/ixi/$(data) --output_filenm ixi/$(result) --models $(model) --pca_status $(pca)
 
 ########## 173 parcels
 data = ixi_173
