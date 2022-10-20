@@ -37,7 +37,7 @@ def read_sub_data(phenotype_file, mask_dir, smooth_fwhm, resample_size):
     print(phenotype.shape)
     print(phenotype.head())
 
-    phenotype = phenotype.iloc[0:10]
+    phenotype = phenotype.iloc[0:2]
 
     data_resampled = np.array([])  # array to save resampled features from subjects mri
     count = 0
@@ -97,7 +97,7 @@ def read_sub_data(phenotype_file, mask_dir, smooth_fwhm, resample_size):
     # renaming the columns and convering to dataframe
     data_resampled = pd.DataFrame(data_resampled)
     data_resampled.rename(columns=lambda X: "f_" + str(X), inplace=True)
-    print(data_resampled.columns)
+    print('Feature names:', data_resampled.columns)
 
     print(f"The size of the feature space is {data_resampled.shape}")
 
