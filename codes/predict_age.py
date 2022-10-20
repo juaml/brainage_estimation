@@ -25,12 +25,12 @@ def model_pred(test_df, model_file, file_name):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--features_path", type=str, help="Features file path", default='../data')  # features directory
-    parser.add_argument("--output_path", type=str, help="Output file path", default='../results')  # results directory
+    parser.add_argument("--features_path", type=str, help="Features file path", default='../data/ADNI')  # features directory
+    parser.add_argument("--output_path", type=str, help="Output file path", default='../results/ADNI')  # results directory
     parser.add_argument("--output_filenm", type=str, help="Output file name", default='ADNI') # results filename extension
     parser.add_argument("--smooth_fwhm", type=int, help="smooth_fwhm", default=4) # smoothing FWHM
     parser.add_argument("--resample_size", type=int, help="resample_size", default=4) # Resampling kernel size
-    parser.add_argument("--subject_filepaths", type=str, help="Subject filepath list", default='../data/ADNI_paths_cat12.8.csv')  # Path to .csv or .txt file with subject filepaths
+    parser.add_argument("--subject_filepaths", type=str, help="Subject filepath list", default='../data/ADNI/ADNI_paths_cat12.8.csv')  # Path to .csv or .txt file with subject filepaths
     parser.add_argument("--mask_dir", type=str, help="GM mask", default='../masks/brainmask_12.8.nii') # Path .nii file for the GM mask
     parser.add_argument("--model_file", type=str, help="Final model to be used to predict",
                         default='../trained_models/4sites_S4_R4_pca.gauss.models')  # Trained model
