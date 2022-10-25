@@ -51,7 +51,7 @@
     7. **Cross-site: Train models**  
       `python3 cross_site_train.py --data_path ../data/ixi_camcan_enki/ixi_camcan_enki_173 --output_path ../results/ixi_camcan_enki/ixi_camcan_enki_173 --   models rvr_lin --confounds None --pca_status 0 --n_jobs 5`
 
-      `python3 cross_site_train.py --data_path ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_173 --output_path ../results/ixi_camcan_enki_1000brains/4sites_173 --models rvr_lin --confounds None --pca_status 0 --n_jobs 5`
+        `python3 cross_site_train.py --data_path ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_173 --output_path ../results/ixi_camcan_enki_1000brains/4sites_173 --models rvr_lin --confounds None --pca_status 0 --n_jobs 5`
 
 
     8. **Cross-site: Read results from saved models**  
