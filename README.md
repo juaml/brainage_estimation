@@ -49,18 +49,18 @@
 
 
     7. **Cross-site: Train models**  
-      `python3 cross_site_train.py --data_path ../data/ixi_camcan_enki/ixi_camcan_enki_173 --output_path ../results/ixi_camcan_enki/ixi_camcan_enki_173 --   models rvr_lin --confounds None --pca_status 0 --n_jobs 5`
+      `python3 cross_site_train.py --data_path ../data/ixi_camcan_enki/ixi_camcan_enki_173 --output_path ../results/ixi_camcan_enki/ixi_camcan_enki_173 --   models rvr_lin --confounds None --pca_status 0 --n_jobs 5`  
 
         `python3 cross_site_train.py --data_path ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_173 --output_path ../results/ixi_camcan_enki_1000brains/4sites_173 --models rvr_lin --confounds None --pca_status 0 --n_jobs 5`
 
 
     8. **Cross-site: Read results from saved models**  
-      `python3 cross_site_read_results.py --data_nm /ixi_camcan_enki/ixi_camcan_enki_`
+      `python3 cross_site_read_results.py --data_nm /ixi_camcan_enki/ixi_camcan_enki_`  
       `python3 cross_site_read_results.py --data_nm /ixi_camcan_enki_1000brains/4sites_ `
 
 
     9. **Cross-site: Get predictions from workflows**  
-      `python3 cross_site_combine_predictions.py --model_folder /ixi_camcan_enki/ixi_camcan_enki_ --test_data_name /1000brains/1000brains_ --save_file_ext pred_1000brains_all`
+      `python3 cross_site_combine_predictions.py --model_folder /ixi_camcan_enki/ixi_camcan_enki_ --test_data_name /1000brains/1000brains_ --save_file_ext pred_1000brains_all`  
       `python3 cross_site_combine_predictions.py --model_folder /ixi_camcan_enki_1000brains/4sites_ --test_data_name /ADNI/ADNI_ --save_file_ext pred_adni_all`  
      
      
