@@ -20,9 +20,7 @@ def model_pred(test_df, X, y, model_file, file_name):
 
     for key, model_value in model.items():
         X_preprocessed, _ = model_value.preprocess(test_df[X], y_true, until='variancethreshold')# until='zscore'
-        # X_preprocessed2, _ = model_value.preprocess(test_df[X], y_true, until='pca')  # until='zscore'
         print('X_preprocessed shape after variancethreshold',  X_preprocessed.shape)
-        # print('X_preprocessed shape after variancethreshold ans zscore',  X_preprocessed2.shape)
 
         # predict test data
         y_pred = model_value.predict(test_df[X]).ravel()
@@ -40,70 +38,57 @@ def model_pred(test_df, X, y, model_file, file_name):
     return pred, y_true, mae_corr
 
 
-def data_read(*args): #data, confounds, ses
-    # data, confounds = data_file, confounds
-    data = args[0]
-    confounds = args[1]
+def read_data(data_file, demo_file):
 
-    data_df = pickle.load(open(data, 'rb'))
+    demo_df = pd.read_csv(open(demo_file, 'rb'))
+    data_df = pickle.load(open(data_file, 'rb'))
+    data_df = pd.concat([demo_df, data_df], axis=1)
+    data_df = data_df.drop(columns='file_path_cat12.8')
+
+    print(data_df)
+    print(demo_df)
+
     data_df.rename(columns=lambda X: str(X), inplace=True)  # convert numbers to strings as column names
-
-    age = data_df['age'].round().astype(int)  # round off age and convert to integer
-    data_df['age'] = age
-    data_df = data_df[data_df['age'].between(18, 90)].reset_index(drop=True)
-
     X = [col for col in data_df if col.startswith('f_')]
     y = 'age'
-    print(data_df.shape)
+
+    age = data_df[y].round().astype(int)  # round off age and convert to integer
+    data_df[y] = age
+    # data_df = data_df[data_df[y].between(18, 90)].reset_index(drop=True)
+
+    print('Any null:', data_df[X].isnull().values.any(), '\n')
     return data_df, X, y
 
 
+## Example of inputs
+# model_folder = '/ixi_camcan_enki/ixi_camcan_enki_' # model trained with 3 datasets
+# test_data_name = '/1000brains/1000brains_'
+# save_file_ext = 'pred_1000brains_all'
+#
+# model_folder = '/ixi_camcan_enki_1000brains/4sites_'
+# test_data_name = '/ADNI/ADNI_'
+# save_file_ext = 'pred_adni_all'
+
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model_folder", type=str, help="Output path for one dataset",
+                        default='/ixi_camcan_enki/ixi_camcan_enki_')
+    parser.add_argument("--test_data_name", type=str, help="Output path for one dataset",
+                        default='/1000brains/1000brains_')
+    parser.add_argument("--save_file_ext", type=str, help="Output path for one dataset",
+                        default='pred_1000brains_all')
+
+    args = parser.parse_args()
+    model_folder = args.model_folder
+    test_data_name = args.test_data_name
+    save_file_ext = args.save_file_ext
 
     confounds = None
-    # train_data_name = '/5_datasets/5_datasets_' # model trained with 5 datasets
-    # data_path = '/data/project/brainage/data_new/oasis3/old/oasis3_comp_brainageR_' # features with few subs to match oasis3_pet sub list
 
-    data_path = '/data/project/brainage/brainage_julearn_final/data_new'
-    results_folder = '/data/project/brainage/brainage_julearn_final/results'
-
-    # train_data_name = '/ixi_camcan_enki/ixi_camcan_enki_' # model trained with 4 datasets
-    # model_folder = '/ixi_camcan_enki/ixi_camcan_enki_'
-    # test_data_name = '/1000brains/new/1000brains_'
-    # save_file_ext = 'pred_1000brains_all'
-
-    # train_data_name = '/camcan_enki_1000brains/camcan_enki_1000brains_' # model trained with 4 datasets
-    # model_folder = '/camcan_enki_1000brains/camcan_enki_1000brains_'
-    # test_data_name = '/ixi/new/ixi_'
-    # save_file_ext = 'pred_ixi_all'
-
-    train_data_name = '/ixi_camcan_1000brains/ixi_camcan_1000brains_' # model trained with 4 datasets
-    model_folder = '/ixi_camcan_1000brains/ixi_camcan_1000brains_'
-    test_data_name = '/enki/new/enki_'
-    save_file_ext = 'pred_enki_all'
-
-    # train_data_name = '/ixi_enki_1000brains/ixi_enki_1000brains_' # model trained with 4 datasets
-    # model_folder = '/ixi_enki_1000brains/ixi_enki_1000brains_'
-    # test_data_name = '/camcan/new/camcan_'
-    # save_file_ext = 'pred_camcan_all'
-
-    # train_data_name = '/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_' # model trained with 4 datasets
-    # model_folder = '/ixi_camcan_enki_1000brains/4sites_'
-    # test_data_name = '/oasis3/new/oasis3_'
-    # save_file_ext = 'pred_oasis3_all'
-
-    # train_data_name = '/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_' # model trained with 4 datasets
-    # model_folder = '/ixi_camcan_enki_1000brains/4sites_'
-    # test_data_name = '/corr/new/corr_'
-    # save_file_ext = 'pred_corr_all'
-
-    # train_data_name = '/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_' # model trained with 4 datasets
-    # model_folder = '/ixi_camcan_enki_1000brains/4sites_'
-    # test_data_name = '/adni/new/ADNI_'
-    # save_file_ext = 'pred_adni_all'
+    data_path = '../data'
+    results_folder = '../results'
 
     test_data_path = data_path + test_data_name
-    train_data_path = data_path + train_data_name
 
     model_names = ['ridge', 'rf', 'rvr_lin', 'kernel_ridge', 'gauss', 'lasso', 'elasticnet', 'rvr_poly']
     data_list = ['173', '473', '873', '1273', 'S0_R4', 'S0_R4_pca', 'S4_R4', 'S4_R4_pca', 'S8_R4', 'S8_R4_pca',
@@ -111,30 +96,29 @@ if __name__ == '__main__':
     data_list_data = ['173', '473', '873', '1273', 'S0_R4', 'S0_R4', 'S4_R4', 'S4_R4', 'S8_R4', 'S8_R4',
                  'S0_R8', 'S0_R8', 'S4_R8', 'S4_R8', 'S8_R8', 'S8_R8']
 
-
     output_df = pd.DataFrame()
     mae_corr_df = pd.DataFrame()
 
     for idx, data_item in enumerate(data_list):
         for model_item in model_names:
             test_data = test_data_path + data_list_data[idx]
-            train_data = train_data_path + data_list_data[idx] # not needed
-
+            demo_file = test_data_path + 'subject_list_cat12.8.csv'
             model_file = results_folder + model_folder + data_item + '.' + model_item + '.models'
 
+            # print(test_data)
+            # print(model_file)
+
             if os.path.exists(model_file) and os.path.exists(test_data):
-                print(train_data)
                 print(test_data)
                 print(model_file)
+
                 print("model and data exists")
 
-                # train_df, train_X, train_y = data_read(train_data, confounds)  # load train data
-                test_df, test_X, test_y = data_read(test_data, confounds) # load test data
+                test_df, test_X, test_y = read_data(test_data, demo_file) # load test data, read data and demo both
                 y_pred1, y_true1, mae_corr1 = model_pred(test_df, test_X, test_y, model_file,
                                                          str(data_item + ' + ' + model_item)) # predict test data
 
                 if output_df.empty:
-                    # output_df = test_df[test_df.columns[0:4]].reset_index(drop=True)
                     needed_cols = test_df.columns[~test_df.columns.isin(test_X)].tolist()
                     output_df = test_df[needed_cols].copy()
 
@@ -144,36 +128,23 @@ if __name__ == '__main__':
     mae_corr_df.to_csv(results_folder + model_folder+ save_file_ext + '_temp.csv')
     output_df.to_csv(results_folder + model_folder + save_file_ext + '.csv', index=False)
 
-    if 'session' is output_df.columns:
-        selected_workflows_df = ['site', 'subject', 'age', 'gender', 'session',
-                                 '173 + rf', '173 + gauss', '173 + lasso',
-                                 '473 + lasso', '473 + rvr_poly',
-                                 '873 + gauss', '873 + elasticnet',
-                                 '1273 + gauss', '1273 + rvr_poly',
-                                 'S0_R4 + lasso',
-                                 'S4_R4 + ridge', 'S4_R4 + rvr_lin', 'S4_R4 + gauss',
-                                 'S4_R4_pca + ridge', 'S4_R4_pca + rf', 'S4_R4_pca + rvr_lin', 'S4_R4_pca + gauss',
-                                 'S8_R4 + kernel_ridge',
-                                 'S8_R4_pca + rvr_lin', 'S8_R4_pca + gauss', 'S8_R4_pca + lasso', 'S8_R4_pca + rvr_poly',
-                                 'S0_R8 + rvr_poly', 'S0_R8_pca + lasso', 'S0_R8_pca + elasticnet', 'S0_R8_pca + rvr_poly',
-                                 'S4_R8 + ridge', 'S4_R8 + rvr_lin', 'S4_R8 + lasso',
-                                 'S8_R8 + ridge', 'S8_R8 + kernel_ridge',
-                                 'S8_R8_pca + elasticnet']
-    else:
-        selected_workflows_df = ['site', 'subject', 'age', 'gender',
-                                 '173 + rf', '173 + gauss', '173 + lasso',
-                                 '473 + lasso', '473 + rvr_poly',
-                                 '873 + gauss', '873 + elasticnet',
-                                 '1273 + gauss', '1273 + rvr_poly',
-                                 'S0_R4 + lasso',
-                                 'S4_R4 + ridge', 'S4_R4 + rvr_lin', 'S4_R4 + gauss',
-                                 'S4_R4_pca + ridge', 'S4_R4_pca + rf', 'S4_R4_pca + rvr_lin', 'S4_R4_pca + gauss',
-                                 'S8_R4 + kernel_ridge',
-                                 'S8_R4_pca + rvr_lin', 'S8_R4_pca + gauss', 'S8_R4_pca + lasso', 'S8_R4_pca + rvr_poly',
-                                 'S0_R8 + rvr_poly', 'S0_R8_pca + lasso', 'S0_R8_pca + elasticnet', 'S0_R8_pca + rvr_poly',
-                                 'S4_R8 + ridge', 'S4_R8 + rvr_lin', 'S4_R8 + lasso',
-                                 'S8_R8 + ridge', 'S8_R8 + kernel_ridge',
-                                 'S8_R8_pca + elasticnet']
+    selected_workflows_df = ['site', 'subject', 'age', 'gender',
+                             '173 + rf', '173 + gauss', '173 + lasso',
+                             '473 + lasso', '473 + rvr_poly',
+                             '873 + gauss', '873 + elasticnet',
+                             '1273 + gauss', '1273 + rvr_poly',
+                             'S0_R4 + lasso',
+                             'S4_R4 + ridge', 'S4_R4 + rvr_lin', 'S4_R4 + gauss',
+                             'S4_R4_pca + ridge', 'S4_R4_pca + rf', 'S4_R4_pca + rvr_lin', 'S4_R4_pca + gauss',
+                             'S8_R4 + kernel_ridge',
+                             'S8_R4_pca + rvr_lin', 'S8_R4_pca + gauss', 'S8_R4_pca + lasso', 'S8_R4_pca + rvr_poly',
+                             'S0_R8 + rvr_poly', 'S0_R8_pca + lasso', 'S0_R8_pca + elasticnet', 'S0_R8_pca + rvr_poly',
+                             'S4_R8 + ridge', 'S4_R8 + rvr_lin', 'S4_R8 + lasso',
+                             'S8_R8 + ridge', 'S8_R8 + kernel_ridge',
+                             'S8_R8_pca + elasticnet']
+
+    if 'session' in output_df.columns:
+        selected_workflows_df.insert(4, 'session')
 
     output_df = output_df.reindex(columns=selected_workflows_df)
     output_df.to_csv(results_folder + model_folder + save_file_ext + '_selected' + '.csv', index=False)

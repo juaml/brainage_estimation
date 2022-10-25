@@ -14,28 +14,31 @@ def none_or_str(value):
     return value
 
 
-
 if __name__ == '__main__':
     # Read arguments from submit file
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument("data_path", type=str, help="Data path")
-    # parser.add_argument("output_filenm", type=str, help="Output file name") # path to scores file
-    # parser.add_argument("mod_nm", type=str, help="model name", default=gauss)
-    # parser.add_argument("confounds", type=none_or_str, help="confounds", default=None)
-    #
-    # args = parser.parse_args()
-    # data = args.data_path
-    # output_filenm = args.output_filenm
-    # output_path = '/data/project/brainage/brainage_julearn/results/' + output_filenm
-    # mod_nm = args.mod_nm
-    # confounds = args.confounds
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--data_path", type=str, help="Data path",
+                        default='../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_S4_R4')
+    parser.add_argument("--output_filenm", type=str, help="Output file name",
+                        default='ixi_camcan_enki_1000brains/4sites_S4_R4_pca_cv.gauss') # path to scores file
+    parser.add_argument("--mod_nm", type=str, help="model name", default='gauss')
+    parser.add_argument("--confounds", type=none_or_str, help="confounds", default=None)
 
-    # example arguments
-    data = '/data/project/brainage/brainage_julearn_final/data_new/ixi_enki_1000brains/ixi_enki_1000brains_S4_R4'
-    output_filenm = 'ixi_enki_1000brains/ixi_enki_1000brains_S4_R4_pca_cv.gauss'
-    output_path = '/data/project/brainage/brainage_julearn_final/results/' + output_filenm
-    mod_nm = 'gauss'
-    confounds = None #'site'
+
+
+    args = parser.parse_args()
+    data = args.data_path
+    output_filenm = args.output_filenm
+    output_path = '../results/' + output_filenm
+    mod_nm = args.mod_nm
+    confounds = args.confounds
+
+    # # example arguments
+    # data = '../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_S4_R4'
+    # output_filenm = 'ixi_camcan_enki_1000brains/4sites_S4_R4_pca_cv.gauss'
+    # output_path = '../results/' + output_filenm
+    # mod_nm = 'gauss'
+    # confounds = None #'site'
 
     scores_path = output_path + '.scores'
     cv_prediction_savepath = output_path + '_cv_predictions.csv'

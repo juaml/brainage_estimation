@@ -8,29 +8,31 @@ request_memory = 5G
 
 
 # Execution
-initial_dir    = /data/project/brainage/brainage_julearn_final/codes_cross_site
+initial_dir    = .
 executable     = $(initial_dir)/run_in_venv.sh
 transfer_executable = False
 
 # Logs
-#log            = $(initial_dir)/logs/$(Cluster).$(Process).log
-#output         = $(initial_dir)/logs/$(Cluster).$(Process).out
-#error          = $(initial_dir)/logs/$(Cluster).$(Process).err
+#log            = $(initial_dir)/../logs/$(Cluster).$(Process).log
+#output         = $(initial_dir)/../logs/$(Cluster).$(Process).out
+#error          = $(initial_dir)/../logs/$(Cluster).$(Process).err
 
-log            = $(initial_dir)/logs/$(result).$(model).$(Cluster).$(Process).log
-output         = $(initial_dir)/logs/$(result).$(model).$(Cluster).$(Process).out
-error          = $(initial_dir)/logs/$(result).$(model).$(Cluster).$(Process).err
+log            = $(initial_dir)/../logs/$(result).$(model).$(Cluster).$(Process).log
+output         = $(initial_dir)/../logs/$(result).$(model).$(Cluster).$(Process).out
+error          = $(initial_dir)/../logs/$(result).$(model).$(Cluster).$(Process).err
 
 # --models: 'ridge', 'rf', 'rvr_lin', 'kernel_ridge', 'gauss', 'lasso', 'elasticnet', 'rvr_poly', 'xgb'
 # --pca_status: 0 or 1
 
 
-arguments = test_env python3 brainage_prediction_across_data_cv.py --data_path $(data_dir)/$(data) --output_path $(results_dir)/$(result) --models $(model) --test_data_path $(test_dir)/$(test_data) --confounds None --pca_status $(pca) --n_jobs 10
+#arguments = test_package_env python3 cross_site_train.py --data_path $(data_dir)/$(data) --output_path $(results_dir)/$(result) --models $(model) --test_data_path $(test_dir)/$(test_data) --confounds None --pca_status $(pca) --n_jobs 10
+arguments = test_package_env python3 cross_site_train.py --data_path $(data_dir)/$(data) --output_path $(results_dir)/$(result) --models $(model) --confounds None --pca_status $(pca) --n_jobs 5
+
 
 #--------test on ADNI (trained on 4 sites)
-data_dir = /data/project/brainage/brainage_julearn_final/data_new/ixi_camcan_enki_1000brains
-results_dir = /data/project/brainage/brainage_julearn_final/results/ixi_camcan_enki_1000brains
-test_dir = /data/project/brainage/brainage_julearn_final/data_new/adni/new
+data_dir = ../data/ixi_camcan_enki_1000brains
+results_dir = ../results/ixi_camcan_enki_1000brains
+#test_dir = ../data/adni/new
 
 ########## S4_R4_pca
 data = ixi_camcan_enki_1000brains_S4_R4
@@ -42,9 +44,9 @@ queue
 
 
 #--------test on 1000brains
-data_dir = /data/project/brainage/brainage_julearn_final/data_new/ixi_camcan_enki
-results_dir = /data/project/brainage/brainage_julearn_final/results/ixi_camcan_enki
-test_dir = /data/project/brainage/brainage_julearn_final/data_new/1000brains/new
+data_dir = ../data/ixi_camcan_enki
+results_dir = ../results/ixi_camcan_enki
+test_dir = ../data/1000brains/new
 
 ########## S4_R4_pca
 data = ixi_camcan_enki_S4_R4
@@ -56,9 +58,9 @@ queue
 
 
 #--------test on enki
-data_dir = /data/project/brainage/brainage_julearn_final/data_new/ixi_camcan_1000brains
-results_dir = /data/project/brainage/brainage_julearn_final/results/ixi_camcan_1000brains
-test_dir = /data/project/brainage/brainage_julearn_final/data_new/enki/new
+data_dir = ../data/ixi_camcan_1000brains
+results_dir = ../results/ixi_camcan_1000brains
+test_dir = ../data/enki/new
 
 ########## S4_R4_pca
 data = ixi_camcan_1000brains_S4_R4
@@ -70,9 +72,9 @@ queue
 
 
 #-------test on camcan
-data_dir = /data/project/brainage/brainage_julearn_final/data_new/ixi_enki_1000brains
-results_dir = /data/project/brainage/brainage_julearn_final/results/ixi_enki_1000brains
-test_dir = /data/project/brainage/brainage_julearn_final/data_new/camcan/new
+data_dir = ../data/ixi_enki_1000brains
+results_dir = ../results/ixi_enki_1000brains
+test_dir = ../data/camcan/new
 
 ########## S4_R4_pca
 data = ixi_enki_1000brains_S4_R4
@@ -84,9 +86,9 @@ queue
 
 
 #-------test on ixi
-data_dir = /data/project/brainage/brainage_julearn_final/data_new/camcan_enki_1000brains
-results_dir = /data/project/brainage/brainage_julearn_final/results/camcan_enki_1000brains
-test_dir = /data/project/brainage/brainage_julearn_final/data_new/ixi/new
+data_dir = ../data/camcan_enki_1000brains
+results_dir = ../results/camcan_enki_1000brains
+test_dir = ../data/ixi/new
 
 ########## S4_R4_pca
 data = camcan_enki_1000brains_S4_R4
