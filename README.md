@@ -1,41 +1,5 @@
-1. **Folder Structure**
-There are following folders and files:
-   
-1. `trained_models`: contains 10 trained models. Models are trained using voxel-wise GM images (from CAT 12.8) with additional smoothing (S0, S4, S8) and resampling (R4, R8) as features with various ML algorithms
-   
-2. `data`:
-   1. `ADNI_mri.tar.gz`: contains preprocessed .nii files for all ADNI subjects (go to `data` folder and run `tar -zxvf ADNI_mri.tar.gz` to get the .nii files)
-   2. `ADNI_paths_cat12.8.csv`: csv with path to .nii files of ADNI subjects
-   3. `ADNI_demographics.csv`: csv with demographic information for ADNI subjects as dowloaded from website
-  
-3. `codes`: contains two python script, details below.
-   
-4. `requirements.txt`: contains list of python packages to be installed
-   
-   
-2. **codes**
-   
-1. `predict_age.py`: This is main file for predicting age. It takes in 8 arguments: `features_path`: path to directory to save or load features(default=../data), `output_path`: path to results directory (default=../results ), `output_filenm`: results filename extension (default='ADNI'), `smooth_fwhm`: smoothing FWHM (default=4), `resample_size`: Resampling kernel size (default=4), `subject_filepaths`: Path to .csv or .txt file with test subject filepaths (default=../data/ADNI_paths_cat12.8.csv), `mask_dir`: Path to .nii file for the GM mask (default=../masks/brainmask_12.8.nii), `model_file`: Path to trained model (default=../trained_models/4sites_S4_R4_pca.gauss.models)
-    
-2. `train_within_site.py`: Train within-site models
-    
-3.  `train_cross_site.py`: Train cross-site models
 
-4. `ixi.submit`
-
-5. `ixi_camcan_enki.submit`
-    
-6. `4sites_bestmodel.submit`
-   
-
-3. **brainage** 
-
-1. `read_data_mask_resampled.py`: called in predict_age.py to calculate features
-
-2.  `create_splits.py`
-
-
-3.  **Create virtual enviornment**
+1.  **Create virtual enviornment**
 `cd brainage_estimation`
 `python3 -m venv test_env`
 `source test_env/bin/activate` 
@@ -45,9 +9,9 @@ There are following folders and files:
 `pip install glmnet`
 
 
-1. **To get predictions**
-`cd codes`
+2. To run codes: `cd codes`
 
+1. **To get predictions**
 Example-1:
 `python3 predict_age.py --features_path ../data --output_path ../results --output_filenm 'ADNI' --smooth_fwhm 4 --resample_size 8 --subject_filepaths ../data/ADNI_paths_cat12.8.csv --mask_dir ../masks/brainmask_12.8.nii --model_file ../trained_models/4sites_S4_R8.ridge.models`
 It calculates features with 4mm smoothing and 8mm resampling (`S4_R8`) for subjects in list (`../data/ADNI_paths_cat12.8.csv`) and calculates predictions using S4_R8+ridge workflow (`../trained_models/4sites_S4_R8.ridge.models`)
@@ -60,11 +24,43 @@ Example-3:
 `python3 predict_age.py`
 Calculates predictions using `S4_R4_pca+gauss` workflow
 
+
 2. **calculate features**
 python3 calculate_features.py ../data/ADNI/ ADNI 4 1 8 ../data/ADNI_paths_cat12.8.csv ../masks/brainmask_12.8.nii
     
-4. **Train within-site models**
-5. **Train cross-site models**
+    
+3. **Within-site: Train models**
+python3 within_site_train.py --demo_path ../data/ixi/ixi_subject_list_cat12.8.csv --data_path ../data/ixi/ixi_173 --output_filenm ixi/ixi_173 --models ridge --pca_status 0
+or use the submit file `within_site_ixi.submit`
 
 
+4. **Within-site: Read results from saved models**
+python3 within_site_read_results.py --data_nm /ixi/ixi_
 
+
+5. **Within-site: Get predictions from 128 workflows**
+python3 within_site_combine_predictions.py --data_nm /ixi/ixi_
+
+
+6. **Within site: Bias correction**
+python3 within_site_bias_correction.py --dataset_flag ixi
+
+
+7. **Cross-site: Train models**
+      python3 cross_site_train.py --data_path ../data/ixi_camcan_enki/ixi_camcan_enki_173 --output_path ../results/ixi_camcan_enki/ixi_camcan_enki_173 --   models rvr_lin --confounds None --pca_status 0 --n_jobs 5
+
+      python3 cross_site_train.py --data_path ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_173 --output_path ../results/ixi_camcan_enki_1000brains/4sites_173 --models rvr_lin --confounds None --pca_status 0 --n_jobs 5
+
+
+8. **Cross-site: Read results from saved models**
+      python3 cross_site_read_results.py --data_nm /ixi_camcan_enki/ixi_camcan_enki_ 
+      python3 cross_site_read_results.py --data_nm /ixi_camcan_enki_1000brains/4sites_ 
+
+
+9. **Cross-site: Get predictions from workflows**
+      python3 cross_site_combine_predictions.py --model_folder /ixi_camcan_enki/ixi_camcan_enki_ --test_data_name /1000brains/1000brains_ --save_file_ext pred_1000brains_all
+      python3 cross_site_combine_predictions.py --model_folder /ixi_camcan_enki_1000brains/4sites_ --test_data_name /ADNI/ADNI_ --save_file_ext pred_adni_all
+   
+   
+10. **Cross site: Bias correction**
+python3 cross_site_bias_correction.py --data_path" ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_S4_R4' --output_filenm ixi_camcan_enki_1000brains/4sites_S4_R4_pca_cv.gauss --mod_nm gauss --confounds None
