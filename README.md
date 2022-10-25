@@ -2,17 +2,11 @@
 1.  **Create virtual enviornment**
 
 `cd brainage_estimation`
-
-`python3 -m venv test_env`
-
+`python3 -m venv test_package_env`
 `source test_env/bin/activate` 
-
 `pip install -r requirements.txt`
-
 `pip install https://github.com/JamesRitchie/scikit-rvm/archive/master.zip` 
-
 `brew install gcc` (For mac users)
-
 `pip install glmnet`
 
 
