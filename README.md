@@ -1,4 +1,3 @@
-
 1.  **Create virtual enviornment**
 
     `cd brainage_estimation`  
@@ -12,7 +11,8 @@
 
 2. To run codes: `cd codes`
 
-    1. **To get predictions**
+    1. **To get predictions**  
+    
     Example-1:
     `python3 predict_age.py --features_path ../data --output_path ../results --output_filenm 'ADNI' --smooth_fwhm 4 --resample_size 8 --subject_filepaths ../data/ADNI_paths_cat12.8.csv --mask_dir ../masks/brainmask_12.8.nii --model_file ../trained_models/4sites_S4_R8.ridge.models`
     It calculates features with 4mm smoothing and 8mm resampling (`S4_R8`) for subjects in list (`../data/ADNI_paths_cat12.8.csv`) and calculates predictions using S4_R8+ridge workflow (`../trained_models/4sites_S4_R8.ridge.models`)
