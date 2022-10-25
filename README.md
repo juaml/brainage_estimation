@@ -56,12 +56,14 @@
 
     8. **Cross-site: Read results from saved models**  
       `python3 cross_site_read_results.py --data_nm /ixi_camcan_enki/ixi_camcan_enki_`  
-      `python3 cross_site_read_results.py --data_nm /ixi_camcan_enki_1000brains/4sites_ `
+     
+     `python3 cross_site_read_results.py --data_nm /ixi_camcan_enki_1000brains/4sites_ `
 
 
     9. **Cross-site: Get predictions from workflows**  
       `python3 cross_site_combine_predictions.py --model_folder /ixi_camcan_enki/ixi_camcan_enki_ --test_data_name /1000brains/1000brains_ --save_file_ext pred_1000brains_all`  
-      `python3 cross_site_combine_predictions.py --model_folder /ixi_camcan_enki_1000brains/4sites_ --test_data_name /ADNI/ADNI_ --save_file_ext pred_adni_all`  
+     
+     `python3 cross_site_combine_predictions.py --model_folder /ixi_camcan_enki_1000brains/4sites_ --test_data_name /ADNI/ADNI_ --save_file_ext pred_adni_all`  
      
      
    10. **Cross site: Bias correction**  
