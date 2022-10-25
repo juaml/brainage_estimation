@@ -1,5 +1,6 @@
 
 1.  **Create virtual enviornment**
+
 `cd brainage_estimation`
 `python3 -m venv test_env`
 `source test_env/bin/activate` 
