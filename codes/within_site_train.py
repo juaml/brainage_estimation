@@ -65,11 +65,11 @@ if __name__ == '__main__':
     num_splits = 5  # how many train and test splits (both for other and inner)
 
     # example arguments
-    # demo_file = '/data/project/brainage/brainage_julearn_final/data_new/camcan/camcan_subject_list_cat12.8.csv'
-    # data = '/data/project/brainage/brainage_julearn_final/data_new/camcan/camcan_bsf_173'
-    # output_filenm = 'camcan/camcan_test'
+    # demo_file = '../data/ixi/ixi_subject_list_cat12.8.csv'
+    # data = '../data/ixi/ixi_173'
+    # output_filenm = '../data/ixi/ixi_173'
     # output_filenm = output_filenm.split('/')
-    # output_dir = Path('/data/project/brainage/brainage_julearn_final/results/', output_filenm[0])
+    # output_dir = Path('../results/', output_filenm[0])
     # model_required = ['rvr_lin']
     # output_dir.mkdir(exist_ok=True, parents=True)
 
@@ -90,12 +90,6 @@ if __name__ == '__main__':
 
     demo = pd.read_csv(demo_file, ',')
     data_df = pd.concat([demo[['site', 'subject', 'age', 'gender']], data_df], axis=1)
-
-    # data_df.rename(columns=lambda X: str(X), inplace=True)  # convert numbers to strings as column names
-    # if 'session' in data_df.columns:
-    #     X = data_df.columns[5:].tolist()  # if session info is also there
-    # else:
-    #     X = data_df.columns[4:].tolist()  # if no session info is also there
 
     # round age, check for duplicates
     data_df['age'] = data_df['age'].round().astype(int) # round off age and convert to integer
@@ -220,15 +214,16 @@ if __name__ == '__main__':
             print('----------', mae, mse, corr)
             results[repeat_key][model_names[i]] = {'predictions': y_pred, 'true': y_true, 'test_idx': test_idx,
                                                    'delta': y_delta, 'mae': mae, 'mse': mse, 'corr': corr}
+
+            pickle.dump(results, open(output_dir / f'{output_filenm[1]}_{model_names[i]}.results', "wb"))
+            pickle.dump(scores_cv, open(output_dir / f'{output_filenm[1]}_{model_names[i]}.scores', "wb"))
+            pickle.dump(models, open(output_dir / f'{output_filenm[1]}_{model_names[i]}.models', "wb"))
+
+            print('Output file name')
+            print(output_dir / f'{output_filenm[1]}_{model_names[i]}.results')
+
         iter = iter + 1
     print('ALL DONE')
-
-    pickle.dump(results, open(output_dir / f'{output_filenm[1]}_{model_names[i]}.results', "wb"))
-    pickle.dump(scores_cv, open(output_dir / f'{output_filenm[1]}_{model_names[i]}.scores', "wb"))
-    pickle.dump(models, open(output_dir / f'{output_filenm[1]}_{model_names[i]}.models', "wb"))
-
-    print('Output file name')
-    print(output_dir / f'{output_filenm[1]}_{model_names[i]}.results')
 
     print("--- %s seconds ---" % (time.time() - start_time))
     print("--- %s hours ---" % ((time.time() - start_time)/3600))
