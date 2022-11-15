@@ -79,7 +79,6 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
     data = args.data_path
-    # test_data = args.test_data_path
     output_path = args.output_path
     model_required = [x.strip() for x in args.models.split(',')]  # converts string into list
     confounds = args.confounds
@@ -87,8 +86,7 @@ if __name__ == '__main__':
     n_jobs = args.n_jobs
 
     # data = '../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_173'
-    # test_data = '../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_173'
-    # output_path = '../results/ixi/ixi_test'
+    # output_path = '../results/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_173'
     # model_required = ['rvr_lin']
     # confounds = None
     # pca_status = bool(0)
@@ -104,7 +102,6 @@ if __name__ == '__main__':
 
     print('Data file:', data)
     print ('Output path : ', output_dir)
-    # print('test_data:', test_data)
     print('Model:', model_required, type(model_required))
     print ('PCA status : ', pca_status)
     print ('Random seed : ', rand_seed)
@@ -119,10 +116,6 @@ if __name__ == '__main__':
 
     # take only samples with age 60 to 80 years
     # data_df = data_df[(data_df['age'] >= 60) & (data_df['age'] <= 90)]
-
-    # Load the test data
-    # test_df, X_test, y_test = read_data(data_file=test_data, train_status='test')
-    # output_df = test_df[['site', 'subject', 'age', 'gender']]
 
     # Initialize variables, set random seed, create classes for age
     scores_cv, models, results = {}, {}, {}
@@ -221,39 +214,11 @@ if __name__ == '__main__':
             models[model_names[i]] = model
             print('best model', model)
 
-        # # get predictions for test data
-        # y_true = test_df[y_test]
-        # y_pred = model.predict(test_df[X_test]).ravel()
-        # y_delta = y_true - y_pred
-        # print(y_true.shape, y_pred.shape)
-        # mae = round(mean_absolute_error(y_true, y_pred), 3)
-        # mse = round(mean_squared_error(y_true, y_pred), 3)
-        # corr = round(np.corrcoef(y_pred, y_true)[1, 0], 3)
-        # print('----------', mae, mse, corr)
-        # output_df[model_names[i]] = y_pred
-        #
-        # results[model_names[i]] = {'predictions': y_pred, 'true': y_true,
-        #                                        'delta': y_delta, 'mae': mae, 'mse': mse, 'corr': corr}
-        # print(results)
+        pickle.dump(scores_cv, open(f'{output_path}.{model_names[i]}.scores', "wb"))
+        pickle.dump(models, open(f'{output_path}.{model_names[i]}.models', "wb"))
+
 
     print('ALL DONE')
-
-    # pickle.dump(results, open(output_dir / f'{output_filenm[1]}_{model_names[i]}.results', "wb"))
-    # pickle.dump(scores_cv, open(output_dir / f'{output_filenm[1]}_{model_names[i]}.scores', "wb"))
-    # pickle.dump(models, open(output_dir / f'{output_filenm[1]}_{model_names[i]}.models', "wb"))
-    # output_df.to_csv(output_dir / f'{output_filenm[1]}_{model_names[i]}_prediction.csv', index=False)
-
-    # print('Output file name')
-    # print(output_dir / f'{output_filenm[1]}_{model_names[i]}.results')
-
-
-    # pickle.dump(results, open(f'{output_path}.{model_names[i]}.results', "wb"))
-    pickle.dump(scores_cv, open(f'{output_path}.{model_names[i]}.scores', "wb"))
-    pickle.dump(models, open(f'{output_path}.{model_names[i]}.models', "wb"))
-    # output_df.to_csv(f'{output_path}.{model_names[i]}_prediction.csv', index=False)
-
-    # print('Output file name')
-    # print(f'{output_path}.{model_names[i]}.results')
 
     print("--- %s seconds ---" % (time.time() - start_time))
     print("--- %s minutes ---" % ((time.time() - start_time)/60))
