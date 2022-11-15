@@ -67,7 +67,7 @@ if __name__ == '__main__':
     # example arguments
     # demo_file = '../data/ixi/ixi_subject_list_cat12.8.csv'
     # data = '../data/ixi/ixi_173'
-    # output_filenm = '../data/ixi/ixi_173'
+    # output_filenm = '../ixi/ixi_173'
     # output_filenm = output_filenm.split('/')
     # output_dir = Path('../results/', output_filenm[0])
     # model_required = ['rvr_lin']
