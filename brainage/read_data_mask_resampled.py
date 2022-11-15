@@ -37,7 +37,7 @@ def read_sub_data(phenotype_file, mask_dir, smooth_fwhm, resample_size):
     print(phenotype.shape)
     print(phenotype.head())
 
-    phenotype = phenotype.iloc[0:2]
+    # phenotype = phenotype.iloc[0:2]
 
     data_resampled = np.array([])  # array to save resampled features from subjects mri
     count = 0
