@@ -152,9 +152,14 @@ if __name__ == '__main__':
     df_combined['workflow_name_updated'] = df_combined['data'] + ' + ' + df_combined['model']
     df_combined.reset_index(drop=True, inplace=True)
 
-    print(cv_filename)
-    print(test_filename)
-    print(combined_filename)
+    print('\n cv results file:', cv_filename)
+    print(df_cv)
+
+    print('\n test results file:', test_filename)
+    print(df_test)
+
+    print('\n combined results file:', combined_filename)
+    print(df_combined)
 
     df_cv.to_csv(cv_filename, index=False)
     df_test.to_csv(test_filename, index=False)

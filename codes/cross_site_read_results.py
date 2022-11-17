@@ -48,7 +48,6 @@ if __name__ == '__main__':
     for data_item in data_list:
         for model_item in model_names:
             scores_item = results_folder + data_nm + data_item + '.' + model_item + '.scores'  # create the complete path to scores file
-            # scores_item = results_folder + data_nm + data_item + '_' + model_item + '.scores'  # create the complete path to scores file
             if os.path.isfile(scores_item):
                 res = pickle.load(open(scores_item, 'rb'))
                 df = pd.DataFrame()
@@ -113,33 +112,59 @@ if __name__ == '__main__':
         '173 + RFR'], columns=['workflow_name_updated'])
 
     df_final = df_cv.merge(selected_workflows_df, how='inner', on=['workflow_name_updated'])
+
+    print('\n cv results file:', cv_filename)
+    print(df_cv)
+
+    print('\n selected results file:', cv_filename_selected)
+    print(df_final)
+
     df_cv.to_csv(cv_filename, index=False)
     df_final.to_csv(cv_filename_selected, index=False)
 
 
-    # # check model parameeters
-    # for data_item in data_list:
-    #     for model_item in model_names:
-    #         model_item = results_folder + data_nm + data_item + '.' + model_item + '.models'  # get models
-    #         print('\n','model filename', model_item)
-    #         if os.path.isfile(model_item):
-    #             res = pickle.load(open(model_item, 'rb'))
-    #             # print(res)
-    #             for key, value in res.items():
-    #                 print(key)
-    #                 if key == 'gauss':
-    #                     model = res['gauss']['gauss']
-    #                     print(model.kernel_.get_params())
-    #                 elif key == 'kernel_ridge':
-    #                     model = res['kernel_ridge']['kernelridge']
-    #                     print(model)
-    #                 elif key == 'rvr':
-    #                     model = res['rvr']['rvr']
-    #                     print(model)
-    #                 else:
-    #                     model = res[key]['elasticnet']
-    #                     print(model.lambda_best_)
+    # # check model parameters
+    print('\n Model Parameters')
+    for data_item in data_list:
+        for model_item in model_names:
+            model_item = results_folder + data_nm + data_item + '.' + model_item + '.models'  # get models
+            # print('\n','model filename', model_item)
+            if os.path.isfile(model_item):
+                print('\n', 'model filename', model_item)
+                res = pickle.load(open(model_item, 'rb'))
+                # print(res)
+                for key, value in res.items():
+                    print(key)
 
+                    if key == 'gauss':
+                        model = res['gauss']['gauss']
+                        # print(model.get_params())
+                        print(model.kernel_.get_params())
+
+                    elif key == 'kernel_ridge':
+                        model = res['kernel_ridge']['kernelridge']
+                        print(model)
+                        # print(model.get_params())
+
+                    elif key == 'rvr_lin':
+                        model = res['rvr_lin']['rvr']
+                        print(model)
+                        # print(model.get_params())
+
+                    elif key == 'rvr_poly':
+                        model = res['rvr_poly']['rvr']
+                        print(model)
+                        # print(model.get_params())
+
+                    elif key == 'rf':
+                        model = res['rf']['rf']
+                        print(model)
+                        # print(model.get_params())
+
+                    else:
+                        model = res[key]['elasticnet']
+                        # print(model.get_params())
+                        print(model.lambda_best_)
 
 
 

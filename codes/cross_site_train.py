@@ -1,37 +1,35 @@
-import pickle
+import time
 import math
+import os.path
+import pickle
 import argparse
 import numpy as np
 import pandas as pd
+from pathlib import Path
+from scipy.stats import zscore
 
-from sklearn.metrics import mean_absolute_error, mean_squared_error
-from sklearn.model_selection import RepeatedStratifiedKFold, StratifiedKFold
+import xgboost as xgb
+from skrvm import RVR
+from glmnet import ElasticNet
+from brainage import XGBoostAdapted
+
+import sklearn.gaussian_process as gp
+from sklearn.kernel_ridge import KernelRidge
+from sklearn.decomposition import PCA
+from sklearn.feature_selection import VarianceThreshold
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import RepeatedStratifiedKFold
 
 from julearn import run_cross_validation
 from julearn.utils import configure_logging
 from julearn.transformers import register_transformer
-from sklearn.feature_selection import VarianceThreshold
 
-from skrvm import RVR
-import sklearn.gaussian_process as gp
-from sklearn.kernel_ridge import KernelRidge
-from glmnet import ElasticNet
-from scipy.stats import zscore
-from sklearn.decomposition import PCA
-from sklearn.preprocessing import StandardScaler
-import xgboost as xgb
-#from xgboost_adapted import XGBoostAdapted
-from brainage import XGBoostAdapted
-from pathlib import Path
-import os.path
-import time
 
 start_time = time.time()
 
 
 def read_data(data_file, train_status):
     data_df = pickle.load(open(data_file, 'rb'))
-
     X = [col for col in data_df if col.startswith('f_')]
     y = 'age'
     data_df['age'] = data_df['age'].round().astype(int)  # round off age and convert to integer
@@ -40,7 +38,6 @@ def read_data(data_file, train_status):
     data_df = data_df.drop(duplicated_subs_1.index).reset_index(drop=True)  # remove duplicated subjects
 
     if confounds is not None:  # convert sites in numbers to perform confound removal
-
         if train_status == 'train':
             site_name = data_df['site'].unique()
             if type(site_name[0]) == str:
@@ -69,14 +66,23 @@ if __name__ == '__main__':
     parser.add_argument("--output_path", type=str, help="Output path")
     parser.add_argument("--models", type=str, nargs='?', const=1, default="RR",
                        help="models to use (comma seperated no space): RR,LinearSVC")
-    # parser.add_argument("--test_data_path", type=str, help="Test Data path")
     parser.add_argument("--confounds", type=none_or_str, help="confounds", default=None)
     parser.add_argument("--pca_status", type=int, default=0,
                        help="0: no pca, 1: yes pca")
     parser.add_argument("--n_jobs", type=int, default=1, help="Number of parallel jobs to run")
 
+
+    # example arguments
+    # data = '../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_173'
+    # output_path = '../results/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_173'
+    # model_required = ['rvr_lin']
+    # confounds = None
+    # pca_status = bool(0)
+    # n_jobs = 1
+
     configure_logging(level='INFO')
 
+    # Parse the arguments
     args = parser.parse_args()
     data = args.data_path
     output_path = args.output_path
@@ -85,12 +91,7 @@ if __name__ == '__main__':
     pca_status = bool(args.pca_status)
     n_jobs = args.n_jobs
 
-    # data = '../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_173'
-    # output_path = '../results/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_173'
-    # model_required = ['rvr_lin']
-    # confounds = None
-    # pca_status = bool(0)
-    # n_jobs = 1
+
     
     output_dir, output_file = os.path.split(output_path)
     Path(output_dir).mkdir(exist_ok=True, parents=True)
@@ -114,9 +115,6 @@ if __name__ == '__main__':
     # Load the train data
     data_df, X, y = read_data(data_file=data, train_status='train')
 
-    # take only samples with age 60 to 80 years
-    # data_df = data_df[(data_df['age'] >= 60) & (data_df['age'] <= 90)]
-
     # Initialize variables, set random seed, create classes for age
     scores_cv, models, results = {}, {}, {}
     qc = pd.cut(data_df['age'].tolist(), bins=5, precision=1)  # create bins for train data only
@@ -128,7 +126,7 @@ if __name__ == '__main__':
                          apply_to='all_features')
     var_threshold = 1e-5
 
-    # Define all models
+    # Define all models and model parameters
     rvr_linear = RVR()
     rvr_poly = RVR()
     kernel_ridge = KernelRidge()  # kernelridge
@@ -175,6 +173,7 @@ if __name__ == '__main__':
                          'xgboostadapted__reg_lambda': [0.0001, 0.01, 0.1, 1, 10, 20],
                          'xgboostadapted__random_seed': rand_seed, 'search_params': {'n_jobs': n_jobs}}]
 
+    # Get the model, its parameters, pca status and train
     for ind in range(0, len(model_required)):  # run only for required models and not all
         print('model required index and name:', ind, model_required[ind])
 
