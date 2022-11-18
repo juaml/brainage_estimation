@@ -70,20 +70,8 @@
             --models ridge \
             --pca_status 0
         ```
-        ```
-        The arguments are:
-        - `--demo_path` should point to a `csv` file with four columns `{'subject', 'site', 'age', 'gender'}`.
-        - `--data_path` should point to a `pickle` file with features.
-        - `--output_filenm` prefix for output files which will be used to create three files `.models`, `.scores`, and `.results`.
-        - `--models` one or more models to train, multiple models can be provided as a comma separated list.
-        - `--pca_status` either 0 (no PCA) or 1 (for PCA retaining 100% variance). 
         
-        This will run outer 5-fold and inner 5x5-fold cross-validation.
         
-        In case you are using `HTcondor`, you can also use the provided submit file.
-        
-        `condor_submit within_site_ixi.submit`
-        ```
 
 
     3.2 **Within-site: Read results from saved models**  
