@@ -27,22 +27,18 @@ if __name__ == '__main__':
 
     # Complete results filepaths
     cv_filename = results_folder + data_nm + cv_file_ext
-    print('cv_filename', cv_filename)
     test_filename = results_folder + data_nm + test_file_ext
-    print('test_filename', test_filename)
     combined_filename = results_folder + data_nm + combined_file_ext
-    print('combined_filename', combined_filename)
 
+    # all model names
     model_names = ['ridge', 'rf', 'rvr_lin', 'kernel_ridge', 'gauss', 'lasso', 'elasticnet', 'rvr_poly'] #'xgb'
     model_names_new = ['RR', 'RFR', 'RVRlin', 'KRR', 'GPR', 'LR', 'ENR', 'RVRpoly'] # 'XGB'
 
+    # all feature spaces names
     data_list = ['173', '473', '873','1273', 'S0_R4', 'S0_R4_pca', 'S4_R4', 'S4_R4_pca', 'S8_R4', 'S8_R4_pca',
                        'S0_R8', 'S0_R8_pca', 'S4_R8', 'S4_R8_pca', 'S8_R8', 'S8_R8_pca']
     data_list_new = ['173', '473', '873','1273', 'S0_R4', 'S0_R4 + PCA', 'S4_R4', 'S4_R4 + PCA', 'S8_R4', 'S8_R4 + PCA',
                        'S0_R8', 'S0_R8 + PCA', 'S4_R8', 'S4_R8 + PCA', 'S8_R8', 'S8_R8 + PCA']
-
-    # data_list = ['S4_R4_GM_pca', 'S4_R4_GM_WM_CSF_pca']
-    # data_list_new = ['S4_R4 + PCA + GM', 'S4_R4 + PCA + GM_WM_CSF']
 
     # check which scores file is missing
     missing_outs = []
@@ -83,7 +79,7 @@ if __name__ == '__main__':
                     df[key1 + '_mae'] = mae_all
                     df[key1 + '_mse'] = mse_all
                     df[key1 + '_corr'] = corr_all
-                print(df)
+                # print(df)
                 df_cv = pd.concat([df_cv, df], axis=0)
 
     df_cv.reset_index(drop=True, inplace=True)
@@ -128,8 +124,7 @@ if __name__ == '__main__':
                     df[key1 + '_mae'] = mae_all
                     df[key1 + '_mse'] = mse_all
                     df[key1 + '_corr'] = corr_all
-                print(df)
-                # df_test = df_test.append(df)
+                # print(df)
                 df_test = pd.concat([df_test, df], axis=0)
 
     df_test.reset_index(drop=True, inplace=True)
@@ -152,17 +147,70 @@ if __name__ == '__main__':
     df_combined['workflow_name_updated'] = df_combined['data'] + ' + ' + df_combined['model']
     df_combined.reset_index(drop=True, inplace=True)
 
+    # save the csv files
     print('\n cv results file:', cv_filename)
     print(df_cv)
-
     print('\n test results file:', test_filename)
     print(df_test)
-
     print('\n combined results file:', combined_filename)
     print(df_combined)
 
     df_cv.to_csv(cv_filename, index=False)
     df_test.to_csv(test_filename, index=False)
     df_combined.to_csv(combined_filename, index=False)
+
+
+    # # check model parameters
+    print('\n Model Parameters')
+    error_models = list()
+    for data_item in data_list:
+        for model_item in model_names:
+            model_item = results_folder + data_nm + data_item + '_' + model_item + '.models'  # get models
+
+            if os.path.isfile(model_item):
+                print('\n', 'model filename', model_item)
+
+                res = pickle.load(open(model_item, 'rb'))
+                # print(res)
+
+                for key1, value1 in res.items():
+                    for key2, value2 in value1.items():
+                        print(key1, key2)
+
+                        if key2 == 'linreg':
+                            print(res[key1]['linreg']['linreg'].intercept_, res[key1]['linreg']['linreg'].coef_)
+
+                        elif key2 == 'gauss':
+                            model = res[key1]['gauss']['gauss']
+                            # print(model.get_params())
+                            print(model.kernel_.get_params())
+
+                        elif key2 == 'kernel_ridge':
+                            model = res[key1]['kernel_ridge']['kernelridge']
+                            print(model)
+
+                        elif key2 == 'rvr_lin':
+                            model = res[key1]['rvr_lin']['rvr']
+                            print(model)
+
+                        elif key2 == 'rvr_poly':
+                            model = res[key1]['rvr_poly']['rvr']
+                            print(model)
+
+                        elif key2 == 'rf':
+                            model = res[key1]['rf']['rf']
+                            print(model)
+
+                        elif key2 == 'xgb':
+                            model = res[key1]['xgb']['xgboostadapted']
+                            print(model)
+
+                        else:  # for lasso, ridge, elasticnet
+                            model = res[key1][key2]['elasticnet']
+                            print(model.lambda_best_)
+
+            else:
+                error_models.append(model_item)
+
 
 

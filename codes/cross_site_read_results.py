@@ -1,9 +1,6 @@
 import pickle
 import pandas as pd
 import os.path
-import matplotlib.pyplot as plt
-import seaborn as sns
-import numpy as np
 import argparse
 
 # all possible inputs
@@ -28,19 +25,20 @@ if __name__ == '__main__':
     cv_file_ext = 'cv_scores.csv'
     cv_file_ext_selected = 'cv_scores_selected.csv'
 
+    # Complete results filepaths
+    cv_filename = results_folder + data_nm + cv_file_ext
+    cv_filename_selected = results_folder + data_nm + cv_file_ext_selected
+
+
+    # all model names
     model_names = ['lin_reg', 'ridge', 'rf', 'rvr_lin', 'kernel_ridge', 'gauss', 'lasso', 'elasticnet', 'rvr_poly'] #'xgb'
     model_names_new = ['LiR', 'RR', 'RFR', 'RVRlin', 'KRR', 'GPR', 'LR', 'ENR', 'RVRpoly'] # 'XGB'
 
+    # all feature spaces names
     data_list = ['173', '473', '873','1273', 'S0_R4', 'S0_R4_pca', 'S4_R4', 'S4_R4_pca', 'S8_R4', 'S8_R4_pca',
                        'S0_R8', 'S0_R8_pca', 'S4_R8', 'S4_R8_pca', 'S8_R8', 'S8_R8_pca']
     data_list_new = ['173', '473', '873','1273', 'S0_R4', 'S0_R4 + PCA', 'S4_R4', 'S4_R4 + PCA', 'S8_R4', 'S8_R4 + PCA',
                        'S0_R8', 'S0_R8 + PCA', 'S4_R8', 'S4_R8 + PCA', 'S8_R8', 'S8_R8 + PCA']
-
-    cv_filename = results_folder + data_nm + cv_file_ext
-    print('cv_filename', cv_filename)
-
-    cv_filename_selected = results_folder + data_nm + cv_file_ext_selected
-    print('cv_filename_selected', cv_file_ext_selected)
 
     # get the saved cv scores
     df = pd.DataFrame()
@@ -66,7 +64,7 @@ if __name__ == '__main__':
                 df['cv_mae'] = mae_all
                 df['cv_mse'] = mse_all
                 df['cv_corr'] = corr_all
-                print(df)
+                # print(df)
                 df_cv = pd.concat([df_cv, df], axis=0)
 
     df_cv = df_cv.reset_index(drop=True)
@@ -76,7 +74,7 @@ if __name__ == '__main__':
     df_cv['workflow_name_updated'] = df_cv['data'] + ' + ' + df_cv['model']
     df_cv.reset_index(drop=True, inplace=True)
 
-    # selected 32 workflows
+    # selected 32 workflows (since we have more then 32 selected workflows)
     selected_workflows_df = pd.DataFrame([
         '173 + GPR',
         '473 + LR',
@@ -113,18 +111,18 @@ if __name__ == '__main__':
 
     df_final = df_cv.merge(selected_workflows_df, how='inner', on=['workflow_name_updated'])
 
+    # save the csv files
     print('\n cv results file:', cv_filename)
     print(df_cv)
-
     print('\n selected results file:', cv_filename_selected)
     print(df_final)
-
     df_cv.to_csv(cv_filename, index=False)
     df_final.to_csv(cv_filename_selected, index=False)
 
 
     # # check model parameters
     print('\n Model Parameters')
+    error_models = list()
     for data_item in data_list:
         for model_item in model_names:
             model_item = results_folder + data_nm + data_item + '.' + model_item + '.models'  # get models
@@ -165,6 +163,10 @@ if __name__ == '__main__':
                         model = res[key]['elasticnet']
                         # print(model.get_params())
                         print(model.lambda_best_)
+
+            else:
+                error_models.append(model_item)
+
 
 
 

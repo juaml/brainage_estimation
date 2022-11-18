@@ -12,6 +12,7 @@ import xgboost as xgb
 from skrvm import RVR
 from glmnet import ElasticNet
 from brainage import XGBoostAdapted
+from brainage import read_data_cross_site
 
 import sklearn.gaussian_process as gp
 from sklearn.kernel_ridge import KernelRidge
@@ -26,30 +27,6 @@ from julearn.transformers import register_transformer
 
 
 start_time = time.time()
-
-
-def read_data(data_file, train_status):
-    data_df = pickle.load(open(data_file, 'rb'))
-    X = [col for col in data_df if col.startswith('f_')]
-    y = 'age'
-    data_df['age'] = data_df['age'].round().astype(int)  # round off age and convert to integer
-    data_df = data_df[data_df['age'].between(18, 90)].reset_index(drop=True)
-    duplicated_subs_1 = data_df[data_df.duplicated(['subject'], keep='first')] # check for duplicates (multiple sessions for one subject)
-    data_df = data_df.drop(duplicated_subs_1.index).reset_index(drop=True)  # remove duplicated subjects
-
-    if confounds is not None:  # convert sites in numbers to perform confound removal
-        if train_status == 'train':
-            site_name = data_df['site'].unique()
-            if type(site_name[0]) == str:
-                site_dict = {k: idx for idx, k in enumerate(site_name)}
-                data_df['site'] = data_df['site'].replace(site_dict)
-
-        elif train_status == 'test': # add site to features & convert site in a number to predict with model trained with  confound removal
-            X.append(confounds)
-            site_name = data_df['site'].unique()[0,]
-            if type(site_name) == str:
-                data_df['site'] = 10
-    return data_df, X, y
 
 
 def none_or_str(value):
@@ -91,10 +68,8 @@ if __name__ == '__main__':
     pca_status = bool(args.pca_status)
     n_jobs = args.n_jobs
 
-
-    
     output_dir, output_file = os.path.split(output_path)
-    Path(output_dir).mkdir(exist_ok=True, parents=True)
+    Path(output_dir).mkdir(exist_ok=True, parents=True) # check and create output directory
 
     # initialize random seed and create test indices
     rand_seed = 200
@@ -113,7 +88,7 @@ if __name__ == '__main__':
     configure_logging(level='INFO')
 
     # Load the train data
-    data_df, X, y = read_data(data_file=data, train_status='train')
+    data_df, X, y = read_data_cross_site(data_file=data, train_status='train', confounds=confounds)
 
     # Initialize variables, set random seed, create classes for age
     scores_cv, models, results = {}, {}, {}

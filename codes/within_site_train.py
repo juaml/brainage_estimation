@@ -40,6 +40,7 @@ def read_data(data_file, demo_file):
     y = 'age'
     data_df['age'] = data_df['age'].round().astype(int)  # round off age and convert to integer
     data_df = data_df[data_df['age'].between(18, 90)].reset_index(drop=True)
+    data_df.sort_values(by='age', inplace=True, ignore_index=True)  # sort by age
     duplicated_subs_1 = data_df[data_df.duplicated(['subject'], keep='first')] # check for duplicates (multiple sessions for one subject)
     data_df = data_df.drop(duplicated_subs_1.index).reset_index(drop=True)  # remove duplicated subjects
     return data_df, X, y
