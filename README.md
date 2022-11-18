@@ -60,7 +60,7 @@
             --mask_dir ../masks/brainmask_12.8.nii
         ```
     
-    3 **Within-site: Train models**
+    3.1 **Within-site: Train models**
         
         ```
         python3 within_site_train.py \
@@ -70,12 +70,13 @@
             --models ridge \
             --pca_status 0
         ```
+        
         The arguments are:
         - `--demo_path` should point to a `csv` file with four columns `{'subject', 'site', 'age', 'gender'}`.
         - `--data_path` should point to a `pickle` file with features.
         - `--output_filenm` prefix for output files which will be used to create three files `.models`, `.scores`, and `.results`.
         - `--models` one or more models to train, multiple models can be provided as a comma separated list.
-        - `--pca_status` either 0 (no PCA) or 1 (for PCA retaining 100% varaince). 
+        - `--pca_status` either 0 (no PCA) or 1 (for PCA retaining 100% variance). 
         
         This will run outer 5-fold and inner 5x5-fold cross-validation.
         
