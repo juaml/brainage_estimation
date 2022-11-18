@@ -16,7 +16,7 @@ def model_pred(test_df, model_file, file_name):
     pred = pd.DataFrame()
     for key, model_value in model.items():
         X = data_df.columns.tolist()
-        pre_X, pre_X2 = model_value.preprocess(test_df[X], test_df[X]) # preprocessed data
+        pre_X, pre_X2 = model_value.preprocess(test_df[X], test_df[X])  # preprocessed data
         y_pred = model_value.predict(test_df).ravel()
         print(y_pred.shape)
         pred[file_name + '+' + key] = y_pred
@@ -64,7 +64,7 @@ if __name__ == "__main__":
     else:
         feature_space_str = 'S' + str(smooth_fwhm) + '_R' + str(resample_size)
 
-    assert(feature_space_str == feature_space), "Mismatch in feature parameters entered and the features used for model training "
+    assert(feature_space_str == feature_space), "Mismatch in feature params entered & features used for model training"
 
     print('Feature space: ', feature_space)
     print('Model name: ', model_name)

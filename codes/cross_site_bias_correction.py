@@ -9,12 +9,6 @@ from sklearn.linear_model import LinearRegression
 from brainage import read_data_cross_site
 
 
-def none_or_str(value):
-    if value == 'None':
-        return None
-    return value
-
-
 if __name__ == '__main__':
     # Read arguments from submit file
     parser = argparse.ArgumentParser()
@@ -23,7 +17,6 @@ if __name__ == '__main__':
     parser.add_argument("--output_filenm", type=str, help="Output file name",
                         default='ixi_camcan_enki_1000brains/4sites_S4_R4_pca_cv.gauss') # path to scores-CV models file
     parser.add_argument("--mod_nm", type=str, help="model name", default='gauss')
-    parser.add_argument("--confounds", type=none_or_str, help="confounds", default=None)
 
     # read arguments
     args = parser.parse_args()
@@ -31,14 +24,13 @@ if __name__ == '__main__':
     output_filenm = args.output_filenm
     output_path = '../results/' + output_filenm
     mod_nm = args.mod_nm
-    confounds = args.confounds
 
     # # example arguments
     # data = '../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_S4_R4'
     # output_filenm = 'ixi_camcan_enki_1000brains/4sites_S4_R4_pca_cv.gauss'
     # output_path = '../results/' + output_filenm
     # mod_nm = 'gauss'
-    # confounds = None #'site'
+
 
     scores_path = output_path + '.scores'
     cv_prediction_savepath = output_path + '_cv_predictions.csv'
@@ -46,14 +38,13 @@ if __name__ == '__main__':
 
     print('\ninput data:', data)
     print('\noutput_path:', output_path)
-    print('\nconfounds:', confounds, type(confounds))
     print('\nscores_path:', scores_path)
     print('\ncv_prediction_savepath:', cv_prediction_savepath)
     print('\nbias_params_savepath:', bias_params_savepath)
     print('\nmodel used:', mod_nm)
 
     # Load the data which was used for training
-    data_df, X, y = read_data_cross_site(data_file=data, train_status='train', confounds=confounds)
+    data_df, X, y = read_data_cross_site(data_file=data, train_status='train', confounds=None)
 
     # Fixed variables, set random seed, create classes for age
     rand_seed, n_splits, n_repeats = 200, 5, 5  # fixed during training models
