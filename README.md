@@ -17,7 +17,7 @@
 
    `cd codes`
 
-    1. **To get predictions** 
+    1. **Get predictions** 
         
         We provide pretrained models that can used to obrain predictions on new samples.
         
@@ -31,7 +31,7 @@
             --smooth_fwhm 4 \
             --resample_size 4 \
             --model_file ../trained_models/4sites_S4_R4_pca.gauss.models
-        ``` 
+        ```
         The arguments are:
         - `--features_path` should point to a directory where calculated features are stored as a `pickle` file.
         - `--subject_filepaths` should point to a text file containing path to the CAT12.8's `mwp1` file for each subject per line.
@@ -60,7 +60,7 @@
             --mask_dir ../masks/brainmask_12.8.nii
         ```
     
-    3.1 **Within-site: Train models**
+    3 **Within-site: Train models**
         
         ```
         python3 within_site_train.py \
