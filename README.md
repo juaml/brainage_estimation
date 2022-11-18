@@ -19,9 +19,26 @@
 
     1. **To get predictions**  
     
-        Example-1:  
-        `python3 predict_age.py --features_path ../data --output_path ../results --output_filenm 'ADNI' --smooth_fwhm 4 --resample_size 8 --subject_filepaths ../data/ADNI_paths_cat12.8.csv --mask_dir ../masks/brainmask_12.8.nii --model_file ../trained_models/4sites_S4_R8.ridge.models`
-        It calculates features with 4mm smoothing and 8mm resampling (`S4_R8`) for subjects in list (`../data/ADNI_paths_cat12.8.csv`) and calculates predictions using S4_R8+ridge workflow (`../trained_models/4sites_S4_R8.ridge.models`)
+        Example-1: Predict age from CAT12.8 files.
+        `python3 predict_age.py --features_path path_to_features_dir \                        
+            --subject_filepaths path_to_txt_file \          
+            --output_path path_to_output_dir \
+            --output_filenm 'ADNI' \
+            --mask_dir ../masks/brainmask_12.8.nii \
+            --smooth_fwhm 4 --resample_size 4 \
+            --model_file ../trained_models/4sites_S4_R4_pca.gauss.models`
+            
+        The arguments are:
+        - `--features_path` should point to a directory where calculated features are stored as a `pickle` file.
+        - `--subject_filepaths` should point to a text file containing path to the CAT12.8's `mwp1` file for each subject per line.
+        - `--output_path` points to a directory where the predictions will be saved.
+        - `--output_filenm` prefix for the output files.
+        - `--mask_dir` should point to the GM mask used (defaults to `../masks/brainmask_12.8.nii`)
+        - `--smooth_fwhm` smoothing kernel size to be used (defaults to 4)
+        - `--resample_size` resampling of the voxels to isometric size (defaults to `4`)
+        - `--model_file` should point to an already trained model (defaults to `4sites_S4_R4_pca.gauss.models`)
+             
+        This example will calculate features with 4mm smoothing and 4mm resampling (`S4_R4`) for all subjects in the provided list (via `--subject_filepaths`) and calculate predictions using the S4_R4_pca+gauss model. Note that if the features are available in the `--features_path` then they will not be recalculated.
 
         Example-2:  
         `python3 predict_age.py --smooth_fwhm 4 --resample_size 4 --model_file ../trained_models/4sites_S4_R4_pca.rvr_lin.models`
