@@ -20,7 +20,7 @@ We provide pretrained models that can used to obrain predictions on new samples.
 
 ```
 python3 predict_age.py \
-	--features_path path_to_features_dir \
+    --features_path path_to_features_dir \
     --subject_filepaths path_to_txt_file \            
     --output_path path_to_output_dir \            
     --output_filenm PREFIX \         
@@ -50,23 +50,23 @@ Note that if the features are available in the `--features_path` then they will 
 It is possible to calculate features from a list of CAT12.8 files.
 ```
 python3 calculate_features.py \
-	--output_path ../data/ADNI/ \
-	--output_filenm ADNI \
-	--smooth_fwhm 4 \
-	--resample_size 8 \
-	--phenotype_file ../data/ADNI_paths_cat12.8.csv \
-	--mask_dir ../masks/brainmask_12.8.nii
+    --output_path ../data/ADNI/ \
+    --output_filenm ADNI \
+    --smooth_fwhm 4 \
+    --resample_size 8 \
+    --phenotype_file ../data/ADNI_paths_cat12.8.csv \
+    --mask_dir ../masks/brainmask_12.8.nii
 ```
     
 4. **Within-site: Train models**
         
 ```
 python3 within_site_train.py \
-	--demo_path ../data/ixi/ixi_subject_list_cat12.8.csv \
-	--data_path ../data/ixi/ixi_173 \
-	--output_filenm ../results/ixi/ixi_173 \
-	--models ridge \
-	--pca_status 0
+    --demo_path ../data/ixi/ixi_subject_list_cat12.8.csv \
+    --data_path ../data/ixi/ixi_173 \
+    --output_filenm ../results/ixi/ixi_173 \
+    --models ridge \
+    --pca_status 0
 ```
 
 The arguments are:
@@ -102,19 +102,19 @@ In case you are using `HTcondor`, you can also use the provided submit file.
 First train a model with three sites.
 ```
 python3 cross_site_train.py \
-	--data_path ../data/ixi_camcan_enki/ixi_camcan_enki_173 \
-	--output_path ../results/ixi_camcan_enki/ixi_camcan_enki_173 \
-	--models rvr_lin \        
-	--pca_status 0 \
-	--n_jobs 5
+    --data_path ../data/ixi_camcan_enki/ixi_camcan_enki_173 \
+    --output_path ../results/ixi_camcan_enki/ixi_camcan_enki_173 \
+    --models rvr_lin \
+    --pca_status 0 \
+    --n_jobs 5
 ```
 
 Now we can make predictions on the hold-out site using all models available in the `--model_folder`.
 ```
 python3 cross_site_combine_predictions.py \
-	--model_folder /ixi_camcan_enki/ixi_camcan_enki_ \
-	--test_data_name /1000brains/1000brains_ \
-	--save_file_ext pred_1000brains_all
+    --model_folder /ixi_camcan_enki/ixi_camcan_enki_ \
+    --test_data_name /1000brains/1000brains_ \
+    --save_file_ext pred_1000brains_all
 ```
 
 9. **Cross-site: Read results from saved models**  
@@ -128,7 +128,7 @@ Create cross-validation scores from cross-site predictions.
 
 ```
 python3 cross_site_bias_correction.py \
-	--data_path ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_S4_R4 \
-	--output_filenm ixi_camcan_enki_1000brains/4sites_S4_R4_pca_cv.gauss \
-	--mod_nm gauss
+    --data_path ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_S4_R4 \
+    --output_filenm ixi_camcan_enki_1000brains/4sites_S4_R4_pca_cv.gauss \
+    --mod_nm gauss
 ```
