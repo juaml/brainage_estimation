@@ -1,6 +1,7 @@
 1.  **Set up**
 
     ```
+    git clone https://github.com/juaml/brainage_estimation.git
     cd brainage_estimation
     python3 -m venv brainage_env
     source brainage_env/bin/activate
