@@ -20,12 +20,19 @@
     1. **To get predictions**  
     
         Example-1: Predict age from CAT12.8 files.
-        `python3 predict_age.py --features_path path_to_features_dir \                        
-            --subject_filepaths path_to_txt_file \          
+        
+        `python3 predict_age.py --features_path path_to_features_dir \
+        
+            --subject_filepaths path_to_txt_file \
+            
             --output_path path_to_output_dir \
+            
             --output_filenm 'ADNI' \
+            
             --mask_dir ../masks/brainmask_12.8.nii \
+            
             --smooth_fwhm 4 --resample_size 4 \
+            
             --model_file ../trained_models/4sites_S4_R4_pca.gauss.models`
             
         The arguments are:
