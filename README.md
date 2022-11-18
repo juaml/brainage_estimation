@@ -1,4 +1,4 @@
-1.  **Create virtual enviornment**
+1.  **Set up**
 
     ```
     cd brainage_estimation
@@ -12,7 +12,8 @@
     ```
 
 
-2. To run codes: 
+2. **Run codes**
+
    `cd codes`
 
     1. **To get predictions**  
