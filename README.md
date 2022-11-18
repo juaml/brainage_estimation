@@ -70,7 +70,7 @@
             --models ridge \
             --pca_status 0
         ```
-        
+        ```
         The arguments are:
         - `--demo_path` should point to a `csv` file with four columns `{'subject', 'site', 'age', 'gender'}`.
         - `--data_path` should point to a `pickle` file with features.
@@ -83,6 +83,7 @@
         In case you are using `HTcondor`, you can also use the provided submit file.
         
         `condor_submit within_site_ixi.submit`
+        ```
 
 
     3.2 **Within-site: Read results from saved models**  
