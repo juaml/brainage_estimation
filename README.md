@@ -67,4 +67,4 @@
      
      
    10. **Cross site: Bias correction**  
-    `python3 cross_site_bias_correction.py --data_path"     ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_S4_R4' --output_filenm ixi_camcan_enki_1000brains/4sites_S4_R4_pca_cv.gauss --mod_nm gauss --confounds None`
+    `python3 cross_site_bias_correction.py --data_path"     ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_S4_R4' --output_filenm ixi_camcan_enki_1000brains/4sites_S4_R4_pca_cv.gauss --mod_nm gauss`
