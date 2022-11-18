@@ -60,7 +60,7 @@
             --mask_dir ../masks/brainmask_12.8.nii
         ```
     
-    3.1 **Within-site: Train models**
+    3. **Within-site: Train models**
         
         ```
         python3 within_site_train.py \
@@ -74,21 +74,21 @@
         
 
 
-    3.2 **Within-site: Read results from saved models**  
+    4. **Within-site: Read results from saved models**  
         
         `python3 within_site_read_results.py --data_nm /ixi/ixi_`
 
 
-    3.3 **Within-site: Get predictions from 128 workflows**  
+    5. **Within-site: Get predictions from 128 workflows**  
         
         `python3 within_site_combine_predictions.py --data_nm /ixi/ixi_`
         
-    3.4 **Within-site: Bias correction**
+    6. **Within-site: Bias correction**
         
         `python3 within_site_bias_correction.py --dataset_flag ixi`
 
 
-    4.1 **Cross-site: Train and test**  
+    7. **Cross-site: Train and test**  
       
         First train a model with three sites.
         ```
@@ -108,14 +108,14 @@
             --save_file_ext pred_1000brains_all
         ```
 
-    4.2 **Cross-site: Read results from saved models**  
+    8. **Cross-site: Read results from saved models**  
         
         Create cross-validation scores from cross-site predictions.
         
         `python3 cross_site_read_results.py --data_nm /ixi_camcan_enki/ixi_camcan_enki_`
 
      
-    4.3 **Cross-site: Bias correction**
+    9. **Cross-site: Bias correction**
         
         ```
         python3 cross_site_bias_correction.py \
