@@ -12,10 +12,9 @@
     pip install glmnet
     ```
 
+After the set up following codes can be run as provided in the `codes` directory.
 
-The codes are provided in the `codes` directory.
-
-    1. **Get predictions** 
+2. **Get predictions** 
         
         We provide pretrained models that can used to obrain predictions on new samples.
         
@@ -45,7 +44,7 @@ The codes are provided in the `codes` directory.
         The model will perform `PCA` based on the model used.
         Note that if the features are available in the `--features_path` then they will not be recalculated.
 
-    2. **calculate features**
+3. **calculate features**
         
         It is possible to calculate features from a list of CAT12.8 files.
         ```
@@ -58,7 +57,7 @@ The codes are provided in the `codes` directory.
             --mask_dir ../masks/brainmask_12.8.nii
         ```
     
-    3. **Within-site: Train models**
+4. **Within-site: Train models**
         
         ```
         python3 within_site_train.py \
@@ -83,21 +82,21 @@ The codes are provided in the `codes` directory.
         `condor_submit within_site_ixi.submit`
 
 
-    4. **Within-site: Read results from saved models**  
+5. **Within-site: Read results from saved models**  
         
         `python3 within_site_read_results.py --data_nm /ixi/ixi_`
 
 
-    5. **Within-site: Get predictions from 128 workflows**  
+6. **Within-site: Get predictions from 128 workflows**  
         
         `python3 within_site_combine_predictions.py --data_nm /ixi/ixi_`
         
-    6. **Within-site: Bias correction**
+7. **Within-site: Bias correction**
         
         `python3 within_site_bias_correction.py --dataset_flag ixi`
 
 
-    7. **Cross-site: Train and test**  
+8. **Cross-site: Train and test**  
       
         First train a model with three sites.
         ```
@@ -117,14 +116,14 @@ The codes are provided in the `codes` directory.
             --save_file_ext pred_1000brains_all
         ```
 
-    8. **Cross-site: Read results from saved models**  
+9. **Cross-site: Read results from saved models**  
         
         Create cross-validation scores from cross-site predictions.
         
         `python3 cross_site_read_results.py --data_nm /ixi_camcan_enki/ixi_camcan_enki_`
 
      
-    9. **Cross-site: Bias correction**
+10. **Cross-site: Bias correction**
         
         ```
         python3 cross_site_bias_correction.py \
