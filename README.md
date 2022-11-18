@@ -1,15 +1,19 @@
 1.  **Create virtual enviornment**
 
-    `cd brainage_estimation`  
-    `python3 -m venv test_package_env`  
-    `source test_package_env/bin/activate`   
-    `pip install -r requirements.txt`  
-    `pip install https://github.com/JamesRitchie/scikit-rvm/archive/master.zip`   
-    `brew install gcc` (For mac users)  
-    `pip install glmnet`  
+    ```
+    cd brainage_estimation
+    python3 -m venv brainage_env
+    source brainage_env/bin/activate
+    pip install -r requirements.txt
+    # install other packages
+    pip install https://github.com/JamesRitchie/scikit-rvm/archive/master.zip
+    #brew install gcc # for Mac users in case you don't have it
+    pip install glmnet
+    ```
 
 
-2. To run codes: `cd codes`
+2. To run codes: 
+   `cd codes`
 
     1. **To get predictions**  
     
