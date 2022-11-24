@@ -34,8 +34,8 @@ The arguments are:
 - `--features_path` should point to a directory where calculated features are stored as a `pickle` file.
 - `--subject_filepaths` should point to a text file containing path to the CAT12.8's `mwp1` file for each subject per line.
 - `--output_path` points to a directory where the predictions will be saved.
-- `--output_filenm` prefix for the output files.
-- `--mask_dir` points to the GM mask to be used (defaults to `../masks/brainmask_12.8.nii`)
+- `--output_prefix` prefix for the output files.
+- `--mask_file` points to the GM mask to be used (defaults to `../masks/brainmask_12.8.nii`)
 - `--smooth_fwhm` smoothing kernel size to be used (defaults to `4`)
 - `--resample_size` resampling of the voxels to isometric size (defaults to `4`)
 - `--model_file` should point to an already trained model (defaults to `4sites_S4_R4_pca.gauss.models`)
