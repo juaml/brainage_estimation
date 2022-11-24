@@ -51,7 +51,7 @@ It is possible to calculate features from a list of CAT12.8 files.
 ```
 python3 calculate_features.py \
     --features_path ../data/ADNI/ \
-    --subject_filepaths ../data/ADNI_paths_cat12.8.csv \
+    --subject_filepaths ../data/ADNI/ADNI_paths_cat12.8.csv \
     --output_prefix ADNI \
     --mask_file ../masks/brainmask_12.8.nii
     --smooth_fwhm 4 \
