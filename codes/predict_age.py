@@ -1,6 +1,5 @@
 #from read_data_mask_resampled import *
 from brainage import read_sub_data
-from julearn.transformers import register_transformer
 from pathlib import Path
 import pandas as pd
 import argparse
@@ -33,11 +32,10 @@ def model_pred(test_df, model_file, feature_space_str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-
     parser.add_argument("--features_path", type=str, help="path to features dir")  # eg '../data/ADNI'
     parser.add_argument("--subject_filepaths", type=str, help="path to csv or txt file with subject filepaths") # eg: '../data/ADNI/ADNI_paths_cat12.8.csv'
     parser.add_argument("--output_path", type=str, help="path to output_dir")  # eg'../results/ADNI'
-    parser.add_argument("--output_prefix", type=str, help="results file name prefix") # eg: 'ADNI'
+    parser.add_argument("--output_prefix", type=str, help="prefix added to features filename ans results (predictions) file name") # eg: 'ADNI'
     parser.add_argument("--mask_file", type=str, help="path to GM mask nii file",
                         default='../masks/brainmask_12.8.nii')
     parser.add_argument("--smooth_fwhm", type=int, help="smoothing FWHM", default=4)
@@ -59,16 +57,16 @@ if __name__ == "__main__":
 
     print('\nBrain-age trained model used: ', model_file)
     print('Subjects filepaths (test data): ', subject_filepaths)
-    print('saved features path: ',  features_path)
+    print('Directory to features path: ',  features_path)
     print('Results directory: ', output_path)
-    print('Results filename: ', output_prefix)
+    print('Results filename prefix: ', output_prefix)
     print('GM mask used: ', mask_file)
 
     # get feature space name from the model file entered and
     # create feature space name using the input values (smoothing, resampling)
     # match them: they should be same
 
-    # get feature space name from the model file
+    # get feature space name from the model file entered in argument
     pipeline_name1 = model_file.split('/')[-1]
     feature_space = pipeline_name1.split('.')[1]
     model_name = pipeline_name1.split('.')[2]
@@ -115,7 +113,6 @@ if __name__ == "__main__":
         predictions_fullfile = os.path.join(output_path, predictions_filename)
         print('\nfilename for predictions created: ', predictions_fullfile)
         predictions_df.to_csv(predictions_fullfile, index=False)
-
         print(predictions_df)
 
     except FileNotFoundError:
