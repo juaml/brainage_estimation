@@ -23,19 +23,19 @@ python3 predict_age.py \
     --features_path path_to_features_dir \
     --subject_filepaths path_to_txt_file \            
     --output_path path_to_output_dir \            
-    --output_filenm PREFIX \         
-    --mask_dir ../masks/brainmask_12.8.nii \            
+    --output_prefix PREFIX \         
+    --mask_file ../masks/brainmask_12.8.nii \            
     --smooth_fwhm 4 \
     --resample_size 4 \
-    --model_file ../trained_models/4sites_S4_R4_pca.gauss.models
+    --model_file ../trained_models/4sites.S4_R4_pca.gauss.models
 ```
 
 The arguments are:
 - `--features_path` should point to a directory where calculated features are stored as a `pickle` file.
 - `--subject_filepaths` should point to a text file containing path to the CAT12.8's `mwp1` file for each subject per line.
 - `--output_path` points to a directory where the predictions will be saved.
-- `--output_filenm` prefix for the output files.
-- `--mask_dir` points to the GM mask to be used (defaults to `../masks/brainmask_12.8.nii`)
+- `--output_prefix` prefix for the output files.
+- `--mask_file` points to the GM mask to be used (defaults to `../masks/brainmask_12.8.nii`)
 - `--smooth_fwhm` smoothing kernel size to be used (defaults to `4`)
 - `--resample_size` resampling of the voxels to isometric size (defaults to `4`)
 - `--model_file` should point to an already trained model (defaults to `4sites_S4_R4_pca.gauss.models`)
@@ -50,12 +50,12 @@ Note that if the features are available in the `--features_path` then they will 
 It is possible to calculate features from a list of CAT12.8 files.
 ```
 python3 calculate_features.py \
-    --output_path ../data/ADNI/ \
-    --output_filenm ADNI \
+    --features_path ../data/ADNI/ \
+    --subject_filepaths ../data/ADNI/ADNI_paths_cat12.8.csv \
+    --output_prefix ADNI \
+    --mask_file ../masks/brainmask_12.8.nii \
     --smooth_fwhm 4 \
     --resample_size 8 \
-    --phenotype_file ../data/ADNI_paths_cat12.8.csv \
-    --mask_dir ../masks/brainmask_12.8.nii
 ```
     
 4. **Within-site: Train models**
