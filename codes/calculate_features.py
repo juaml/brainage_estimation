@@ -13,6 +13,8 @@ if __name__ == '__main__':
     parser.add_argument("--smooth_fwhm", type=int, help="smooth_fwhm")
     parser.add_argument("--resample_size", type=int, help="resample_size")
     parser.add_argument("--phenotype_file", type=str, help="Phenotype file name")
+    parser.add_argument("--mask_dir", type=str, help="Phenotype file name", default= '../masks/brainmask_12.8.nii')
+
 
     args = parser.parse_args()
     output_folder = Path(args.output_folder)

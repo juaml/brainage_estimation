@@ -5,7 +5,6 @@ from pathlib import Path
 import pandas as pd
 import argparse
 import pickle
-import os.path
 import os
 import re
 
@@ -25,7 +24,7 @@ def model_pred(test_df, model_file, file_name):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--features_path", type=str, help="Features file path", default='../data/ADNI')  # features directory
+    parser.add_argument("--features_path", type=str, help="Features file path", default='../data/ADNI')  # features directory '../data/ADNI'
     parser.add_argument("--output_path", type=str, help="Output file path", default='../results/ADNI')  # results directory
     parser.add_argument("--output_filenm", type=str, help="Output file name", default='ADNI') # results filename extension
     parser.add_argument("--smooth_fwhm", type=int, help="smooth_fwhm", default=4) # smoothing FWHM
