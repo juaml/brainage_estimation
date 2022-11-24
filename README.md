@@ -23,7 +23,7 @@ python3 predict_age.py \
     --features_path path_to_features_dir \
     --subject_filepaths path_to_txt_file \            
     --output_path path_to_output_dir \            
-    --output_filenm PREFIX \         
+    --output_prefix PREFIX \         
     --mask_file ../masks/brainmask_12.8.nii \            
     --smooth_fwhm 4 \
     --resample_size 4 \
