@@ -50,12 +50,12 @@ Note that if the features are available in the `--features_path` then they will 
 It is possible to calculate features from a list of CAT12.8 files.
 ```
 python3 calculate_features.py \
-    --output_path ../data/ADNI/ \
-    --output_filenm ADNI \
+    --features_path ../data/ADNI/ \
+    --subject_filepaths ../data/ADNI_paths_cat12.8.csv \
+    --output_prefix ADNI \
+    --mask_file ../masks/brainmask_12.8.nii
     --smooth_fwhm 4 \
     --resample_size 8 \
-    --phenotype_file ../data/ADNI_paths_cat12.8.csv \
-    --mask_dir ../masks/brainmask_12.8.nii
 ```
     
 4. **Within-site: Train models**
