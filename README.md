@@ -63,7 +63,7 @@ python3 calculate_features.py \
 ```
 python3 within_site_train.py \
     --demographics_file ../data/ixi/ixi_subject_list_cat12.8.csv \
-    --features_file ../data/ixi/ixi_173 \
+    --features_file ../data/ixi/ixi.173 \
     --output_path ../results/ixi \
     --output_prefix ixi.173 \
     --models rvr_lin \
@@ -87,12 +87,12 @@ In case you are using `HTcondor`, you can also use the provided submit file.
 
 5. **Within-site: Read results from saved models**  
         
-`python3 within_site_read_results.py --data_nm /ixi/ixi_`
+`python3 within_site_read_results.py --data_nm ../results/ixi/ixi_`
 
 
 6. **Within-site: Get predictions from 128 workflows**  
         
-`python3 within_site_combine_predictions.py --data_nm /ixi/ixi_`
+`python3 within_site_combine_predictions.py --data_nm ../results/ixi/ixi_`
         
 7. **Within-site: Bias correction**
         
@@ -105,7 +105,7 @@ First train a model with three sites.
 ```
 python3 cross_site_train.py \
     --demographics_file ../data/ixi_camcan_enki/ixi_camcan_enki_subject_list_cat12.8.csv \
-    --features_file ../data/ixi_camcan_enki/ixi_camcan_enki_173 \
+    --features_file ../data/ixi_camcan_enki/ixi_camcan_enki.173 \
     --output_path ../results/ixi_camcan_enki \
     --output_prefix ixi_camcan_enki.173 \
     --models rvr_lin \
@@ -115,8 +115,8 @@ python3 cross_site_train.py \
 Now we can make predictions on the hold-out site using all models available in the `--model_folder`.
 ```
 python3 cross_site_combine_predictions.py \
-    --model_folder /ixi_camcan_enki/ixi_camcan_enki_ \
-    --test_data_name /1000brains/1000brains_ \
+    --model_folder /ixi_camcan_enki/ixi_camcan_enki. \
+    --test_data_name /1000brains/1000brains. \
     --save_file_ext pred_1000brains_all
 ```
 
@@ -124,7 +124,7 @@ python3 cross_site_combine_predictions.py \
         
 Create cross-validation scores from cross-site predictions.
         
-`python3 cross_site_read_results.py --data_nm /ixi_camcan_enki/ixi_camcan_enki_`
+`python3 cross_site_read_results.py --data_nm ../results/ixi_camcan_enki/ixi_camcan_enki_`
 
      
 10. **Cross-site: Bias correction**
