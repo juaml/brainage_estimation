@@ -64,7 +64,8 @@ python3 calculate_features.py \
 python3 within_site_train.py \
     --demo_path ../data/ixi/ixi_subject_list_cat12.8.csv \
     --data_path ../data/ixi/ixi_173 \
-    --output_filenm ../results/ixi/ixi_173 \
+    --output_filenm ../results/ixi \
+    --output_prefix ixi.173
     --models ridge \
     --pca_status 0
 ```
