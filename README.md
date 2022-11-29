@@ -64,16 +64,17 @@ python3 calculate_features.py \
 python3 within_site_train.py \
     --demographics_file ../data/ixi/ixi_subject_list_cat12.8.csv \
     --features_file ../data/ixi/ixi_173 \
-    --output_filenm ../results/ixi \
-    --output_prefix ixi.173
+    --output_path ../results/ixi \
+    --output_prefix ixi.173 \
     --models rvr_lin \
     --pca_status 0
 ```
 
 The arguments are:
-- `--demo_path` should point to a `csv` file with four columns `{'subject', 'site', 'age', 'gender'}`.
-- `--data_path` should point to a `pickle` file with features.
-- `--output_filenm` prefix for output files which will be used to create three files `.models`, `.scores`, and `.results`.
+- `--demographics_file` should point to a `csv` file with four columns `{'subject', 'site', 'age', 'gender'}`.
+- `--features_file` should point to a `pickle` file with features.
+- `--output_path` points to a directory where the models, scores and results will be saved.
+- `--output_prefix` prefix for output files which will be used to create three files `.models`, `.scores`, and `.results`.
 - `--models` one or more models to train, multiple models can be provided as a comma separated list.
 - `--pca_status` either 0 (no PCA) or 1 (for PCA retaining 100% variance). 
 
@@ -103,11 +104,12 @@ In case you are using `HTcondor`, you can also use the provided submit file.
 First train a model with three sites.
 ```
 python3 cross_site_train.py \
-    --data_path ../data/ixi_camcan_enki/ixi_camcan_enki_173 \
-    --output_path ../results/ixi_camcan_enki/ixi_camcan_enki_173 \
+    --demographics_file ../data/ixi_camcan_enki/ixi_camcan_enki_subject_list_cat12.8.csv \
+    --features_file ../data/ixi_camcan_enki/ixi_camcan_enki_173 \
+    --output_path ../results/ixi_camcan_enki \
+    --output_prefix ixi_camcan_enki.173 \
     --models rvr_lin \
-    --pca_status 0 \
-    --n_jobs 5
+    --pca_status 0
 ```
 
 Now we can make predictions on the hold-out site using all models available in the `--model_folder`.
