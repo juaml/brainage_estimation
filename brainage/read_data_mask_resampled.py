@@ -5,39 +5,40 @@ import pandas as pd
 import nibabel as nib
 import nibabel.processing as npr
 
-
 def binarize_3d(img, threshold):
     """binarize 3D spatial image"""
     return nib.Nifti1Image(
         np.where(img.get_fdata() > threshold, 1, 0), img.affine, img.header
     )
 
-
-def read_sub_data(phenotype_file, mask_dir, smooth_fwhm, resample_size):
+def read_sub_data(phenotype_file, mask_file, smooth_fwhm, resample_size):
     """Calculate features for the subjects
 
-    input:
-    phenotype_file: A csv or text file with path to subject images
-    mask_dir: The mask to be used to extract features
-    smooth_fwhm: Smooth images by applying a Gaussian filter by given FWHM (mm)
-    resampling_size: Resample image to given voxel size
-    output:
-    data_resampled: pandas dataframe of features (N subjects by M features)
-    """
+    Args:
+        phenotype_file (csv or txt): A csv or text file with path to subject images
+        mask_file (nii): The GM mask file to be used to extract features
+        smooth_fwhm (int): Smooth images by applying a Gaussian filter by given FWHM (mm)
+        resample_size (int): Resample image to given voxel size
 
-    filename, file_extension = os.path.splitext(phenotype_file)
+    Returns:
+        data_resampled (dataframe): pandas dataframe of features (N subjects by M features)
+    """    
 
-    if file_extension == ".txt":
-        phenotype = pd.read_csv(phenotype_file, header=None)
-    elif file_extension == ".csv":
-        phenotype = pd.read_csv(phenotype_file, sep=",", header=None)
-    else:
-        raise ValueError("Wrong file. Please imput either a csv or text file")
+    phenotype = pd.read_csv(phenotype_file, header=None)
+    
+    # don't need this anymore
+    # filename, file_extension = os.path.splitext(phenotype_file)
+    # if file_extension == ".txt":
+    #     phenotype = pd.read_csv(phenotype_file, header=None)
+    # elif file_extension == ".csv":
+    #     phenotype = pd.read_csv(phenotype_file, sep=",", header=None)
+    # else:
+    #     raise ValueError("Wrong file. Please imput either a csv or text file")
 
     print(phenotype.shape)
     print(phenotype.head())
 
-    # phenotype = phenotype.iloc[0:2]
+    phenotype = phenotype.iloc[0:15]
 
     data_resampled = np.array([])  # array to save resampled features from subjects mri
     count = 0
@@ -47,7 +48,7 @@ def read_sub_data(phenotype_file, mask_dir, smooth_fwhm, resample_size):
         if os.path.exists(sub_file):
             print(f"\n-----Processing subject number {count}------")
             sub_img = nib.load(sub_file)  # load subject image
-            mask_img = nib.load(mask_dir)  # load mask image
+            mask_img = nib.load(mask_file)  # load mask image
             print("Subject and mask image loaded")
             print("sub affine original \n", sub_img.affine, sub_img.shape)
             print("mask affine original \n", mask_img.affine, mask_img.shape)

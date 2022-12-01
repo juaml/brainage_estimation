@@ -46,7 +46,7 @@ if __name__ == '__main__':
 
     features_path.mkdir(exist_ok=True, parents=True)
 
-    full_filename = str(output_prefix) + '_S' + str(smooth_fwhm) + '_R' + str(resample_size)
+    full_filename = str(output_prefix) + '.S' + str(smooth_fwhm) + '_R' + str(resample_size)
     filename = os.path.join(features_path, full_filename)
     print('filename for features created: ', filename)
     pickle.dump(data_resampled, open(filename, "wb"), protocol=4)

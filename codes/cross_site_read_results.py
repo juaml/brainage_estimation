@@ -1,33 +1,31 @@
 import pickle
-import pandas as pd
 import os.path
 import argparse
+import pandas as pd
 
 # all possible inputs
 ## cross site (3 sites)
-# data_nm = '/camcan_enki_1000brains/camcan_enki_1000brains_'
-# data_nm = '/ixi_enki_1000brains/ixi_enki_1000brains_'
-# data_nm = '/ixi_camcan_enki/ixi_camcan_enki_'
-# data_nm = '/ixi_camcan_1000brains/ixi_camcan_1000brains_'
+# data_nm = '..results/camcan_enki_1000brains/camcan_enki_1000brains_'
+# data_nm = '..results/ixi_enki_1000brains/ixi_enki_1000brains_'
+# data_nm = '..results/ixi_camcan_enki/ixi_camcan_enki_'
+# data_nm = '..results/ixi_camcan_1000brains/ixi_camcan_1000brains_'
 ## cross-site (4 sites)
-# data_nm = '/ixi_camcan_enki_1000brains/4sites_'
+# data_nm = '..results/ixi_camcan_enki_1000brains/4sites_'
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data_nm", type=str, help="Output path for one dataset", default='/ixi_camcan_enki/ixi_camcan_enki_')
+    parser.add_argument("--data_nm", type=str, help="Output path for one dataset")
 
     args = parser.parse_args()
     data_nm = args.data_nm
-
-    results_folder = '../results'
 
     # Filename to save results
     cv_file_ext = 'cv_scores.csv'
     cv_file_ext_selected = 'cv_scores_selected.csv'
 
     # Complete results filepaths
-    cv_filename = results_folder + data_nm + cv_file_ext
-    cv_filename_selected = results_folder + data_nm + cv_file_ext_selected
+    cv_filename = data_nm + cv_file_ext
+    cv_filename_selected = data_nm + cv_file_ext_selected
 
 
     # all model names
@@ -45,7 +43,7 @@ if __name__ == '__main__':
     df_cv = pd.DataFrame()
     for data_item in data_list:
         for model_item in model_names:
-            scores_item = results_folder + data_nm + data_item + '.' + model_item + '.scores'  # create the complete path to scores file
+            scores_item = data_nm + data_item + '.' + model_item + '.scores'  # create the complete path to scores file
             if os.path.isfile(scores_item):
                 res = pickle.load(open(scores_item, 'rb'))
                 df = pd.DataFrame()
@@ -125,7 +123,7 @@ if __name__ == '__main__':
     error_models = list()
     for data_item in data_list:
         for model_item in model_names:
-            model_item = results_folder + data_nm + data_item + '.' + model_item + '.models'  # get models
+            model_item = data_nm + data_item + '.' + model_item + '.models'  # get models
             # print('\n','model filename', model_item)
             if os.path.isfile(model_item):
                 print('\n', 'model filename', model_item)
