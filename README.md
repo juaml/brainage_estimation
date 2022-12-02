@@ -45,24 +45,36 @@ The predictions will be performed using the S4_R4_pca+gauss model.
 The model will perform `PCA` based on the model used.
 Note that if the features are available in the `--features_path` then they will not be recalculated.
 
-3. **calculate features**
+3. **calculate features: voxel-wise and parcel-wise features**
         
 It is possible to calculate features from a list of CAT12.8 files.
+
+Voxel-wise features
 ```
-python3 calculate_features.py \
+python3 calculate_features_voxelwise.py \
     --features_path ../data/ADNI/ \
-    --subject_filepaths ../data/ADNI/ADNI_paths_cat12.8.csv \
+    --subject_filepaths ../data/ADNI/ADNI.paths_cat12.8.csv \
     --output_prefix ADNI \
     --mask_file ../masks/brainmask_12.8.nii \
     --smooth_fwhm 4 \
     --resample_size 8 \
+```
+
+Parcel-wise features
+```
+python3 calculate_features_parcelwise.py \
+    --features_path ../data/ADNI/ \
+    --subject_filepaths ../data/ADNI/ADNI.paths_cat12.8.csv \
+    --output_prefix ADNI \
+    --mask_file ../masks/BSF_173.nii \
+    --num_parcels 173 \
 ```
     
 4. **Within-site: Train models**
         
 ```
 python3 within_site_train.py \
-    --demographics_file ../data/ixi/ixi_subject_list_cat12.8.csv \
+    --demographics_file ../data/ixi/ixi.subject_list_cat12.8.csv \
     --features_file ../data/ixi/ixi.173 \
     --output_path ../results/ixi \
     --output_prefix ixi.173 \
@@ -87,12 +99,18 @@ In case you are using `HTcondor`, you can also use the provided submit file.
 
 5. **Within-site: Read results from saved models**  
         
-`python3 within_site_read_results.py --data_nm ../results/ixi/ixi_`
+`python3 within_site_read_results.py --data_nm ../results/ixi/ixi.`
 
 
 6. **Within-site: Get predictions from 128 workflows**  
         
-`python3 within_site_combine_predictions.py --data_nm ../results/ixi/ixi_`
+```
+python3 within_site_combine_predictions.py \
+    --demographics_file ../data/ixi/ixi.subject_list_cat12.8.csv \
+    --features_path ../data/ixi/ixi. \
+    --model_path ../results/ixi/ixi. \
+    --output_prefix all_models_pred
+ ```
         
 7. **Within-site: Bias correction**
         
@@ -112,26 +130,28 @@ python3 cross_site_train.py \
     --pca_status 0
 ```
 
-Now we can make predictions on the hold-out site using all models available in the `--model_folder`.
-```
+Now we can make predictions on the hold-out site using all models available in the `--model_path`.
+```  
 python3 cross_site_combine_predictions.py \
-    --model_folder /ixi_camcan_enki/ixi_camcan_enki. \
-    --test_data_name /1000brains/1000brains. \
-    --save_file_ext pred_1000brains_all
+    --demographics_file ../data/1000brains/1000brains.subject_list_cat12.8.csv \
+    --features_path ../data/1000brains/1000brains. \
+    --model_path ../results/ixi_camcan_enki/ixi_camcan_enki. \
+    --output_prefix pred_1000brains_all
+
 ```
 
 9. **Cross-site: Read results from saved models**  
         
 Create cross-validation scores from cross-site predictions.
         
-`python3 cross_site_read_results.py --data_nm ../results/ixi_camcan_enki/ixi_camcan_enki_`
+`python3 cross_site_read_results.py --data_nm ../results/ixi_camcan_enki/ixi_camcan_enki.`
 
      
 10. **Cross-site: Bias correction**
 
 ```
 python3 cross_site_bias_correction.py \
-    --data_path ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_S4_R4 \
-    --output_filenm ixi_camcan_enki_1000brains/4sites_S4_R4_pca_cv.gauss \
+    --data_path ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains.S4_R4 \
+    --output_filenm ixi_camcan_enki_1000brains/4sites.S4_R4_pca_cv.gauss \
     --mod_nm gauss
 ```
