@@ -130,7 +130,7 @@ python3 cross_site_train.py \
     --pca_status 0
 ```
 
-Now we can make predictions on the hold-out site using all models available in the `--model_folder`.
+Now we can make predictions on the hold-out site using all models available in the `--model_path`.
 ```  
 python3 cross_site_combine_predictions.py \
     --demographics_file ../data/1000brains/1000brains.subject_list_cat12.8.csv \
