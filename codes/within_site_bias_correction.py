@@ -3,7 +3,6 @@ import math
 import os.path
 import argparse
 import numpy as np
-import scipy.stats
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import StratifiedKFold
@@ -29,20 +28,20 @@ if __name__ == '__main__':
     data = ''
 
     if dataset_flag == 'ixi':
-        data = results_path + 'ixi/ixi_all_models_pred.csv'  # uncorrected predictions
-        output_path = results_path + 'ixi/ixi_all_models_pred_BC.csv'
+        data = results_path + 'ixi/ixi.all_models_pred.csv'  # uncorrected predictions
+        output_path = results_path + 'ixi/ixi.all_models_pred_BC.csv'
 
     elif dataset_flag == 'enki':
-        data = results_path + 'enki/enki_all_models_pred.csv'  # uncorrected predictions
-        output_path = results_path + 'enki/enki_all_models_pred_BC.csv'
+        data = results_path + 'enki/enki.all_models_pred.csv'  # uncorrected predictions
+        output_path = results_path + 'enki/enki.all_models_pred_BC.csv'
 
     elif dataset_flag == 'camcan':
-        data = results_path + 'camcan/camcan_all_models_pred.csv'  # uncorrected predictions
-        output_path = results_path + 'camcan/camcan_all_models_pred_BC.csv'
+        data = results_path + 'camcan/camcan.all_models_pred.csv'  # uncorrected predictions
+        output_path = results_path + 'camcan/camcan.all_models_pred_BC.csv'
 
     elif dataset_flag == '1000brains':
-        data = results_path + '1000brains/1000brains_all_models_pred.csv'  # uncorrected predictions
-        output_path = results_path + '1000brains/1000brains_all_models_pred_BC.csv'
+        data = results_path + '1000brains/1000brains.all_models_pred.csv'  # uncorrected predictions
+        output_path = results_path + '1000brains/1000brains.all_models_pred_BC.csv'
     else:
         print('error')
 
@@ -50,7 +49,7 @@ if __name__ == '__main__':
         data_df = pd.read_csv(data) # read predictions from all workflows
         print(data_df.columns)
         print(data_df.index)
-
+        
         if 'session' in data_df.columns:
             column_list = data_df.columns[5:] # remove ['site', 'subject', 'age', 'gender'']
             results_all = data_df[['site', 'subject', 'age', 'gender', 'session']]

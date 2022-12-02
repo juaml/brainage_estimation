@@ -26,20 +26,7 @@ def none_or_str(value):
         return None
     return value
 
-
 if __name__ == '__main__':
-
-    # Read arguments from submit file
-    parser = argparse.ArgumentParser()
-    # parser.add_argument("--data_path", type=str, help="Data path")
-    # parser.add_argument("--output_path", type=str, help="Output path")
-    # parser.add_argument("--models", type=str, nargs='?', const=1, default="RR",
-    #                    help="models to use (comma seperated no space): RR,LinearSVC")
-    # parser.add_argument("--confounds", type=none_or_str, help="confounds", default=None)
-    # parser.add_argument("--pca_status", type=int, default=0,
-    #                    help="0: no pca, 1: yes pca")
-    # parser.add_argument("--n_jobs", type=int, default=1, help="Number of parallel jobs to run")
-
     parser = argparse.ArgumentParser()
     parser.add_argument("--demographics_file", type=str, help="Demographics file path")
     parser.add_argument("--features_file", type=str, help="Features file path")
@@ -64,7 +51,7 @@ if __name__ == '__main__':
     confounds = args.confounds
     pca_status = bool(args.pca_status)
     n_jobs = args.n_jobs
-    Path(output_path).mkdir(exist_ok=True, parents=True) # check and create output directory
+    output_path.mkdir(exist_ok=True, parents=True) # check and create output directory
 
     # initialize random seed and create test indices
     rand_seed = 200
@@ -86,8 +73,7 @@ if __name__ == '__main__':
     data_df, X, y = read_data(features_file=features_file, demographics_file=demographics_file)
 
     # register VarianceThreshold as a transformer
-    register_transformer('variancethreshold', VarianceThreshold, returned_features='unknown',
-                         apply_to='all_features')
+    register_transformer('variancethreshold', VarianceThreshold, returned_features='unknown', apply_to='all_features')
     var_threshold = 1e-5
 
     # Initialize variables, set random seed, create classes for age
@@ -143,31 +129,30 @@ if __name__ == '__main__':
                          'xgboostadapted__reg_lambda': [0.0001, 0.01, 0.1, 1, 10, 20],
                          'xgboostadapted__random_seed': rand_seed, 'search_params': {'n_jobs': n_jobs}}]
 
+    # Define processing for X (features)
+    if confounds is None:
+        if pca_status:
+            preprocess_X = ['variancethreshold', 'zscore', pca]
+        else:
+            preprocess_X = ['variancethreshold', 'zscore']
+    else:
+        if pca_status:
+            preprocess_X = ['variancethreshold', 'zscore', 'remove_confound', pca]
+        else:
+            preprocess_X = ['variancethreshold', 'zscore', 'remove_confound']
+    print('Preprocessing includes:', preprocess_X)
+     
     # Get the model, its parameters, pca status and train
     for ind in range(0, len(model_required)):  # run only for required models and not all
         print('model required index and name:', ind, model_required[ind])
         i = model_names.index(model_required[ind])  # find index of required model in model_names list and use this index i to access model params
         assert model_required[ind] == model_names[i] # sanity check
         print('model picked from the list', model_names[i], model_list[i], '\n')
-
-        if confounds is None:
-            if pca_status:
-                preprocess_X = ['variancethreshold', 'zscore', pca]
-            else:
-                preprocess_X = ['variancethreshold', 'zscore']
-        else:
-            if pca_status:
-                preprocess_X = ['variancethreshold', 'zscore', 'remove_confound', pca]
-            else:
-                preprocess_X = ['variancethreshold', 'zscore', 'remove_confound']
-
-        print('Preprocessing includes:', preprocess_X)
-
+       
         # initialize dictionaries to save scores and models here to save every model separately
         scores_cv, models = {}, {}
         
-        cv = RepeatedStratifiedKFold(n_splits=n_splits, n_repeats=n_repeats, random_state=rand_seed).split(data_df,
-                                                                                                           data_df.bins)
+        cv = RepeatedStratifiedKFold(n_splits=n_splits, n_repeats=n_repeats, random_state=rand_seed).split(data_df, data_df.bins)
 
         scores, model = run_cross_validation(X=X, y=y, data=data_df, preprocess_X=preprocess_X, confounds=confounds,
                                              problem_type='regression', model=model_list[i], cv=cv,

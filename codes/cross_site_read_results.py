@@ -38,6 +38,17 @@ if __name__ == '__main__':
     data_list_new = ['173', '473', '873','1273', 'S0_R4', 'S0_R4 + PCA', 'S4_R4', 'S4_R4 + PCA', 'S8_R4', 'S8_R4 + PCA',
                        'S0_R8', 'S0_R8 + PCA', 'S4_R8', 'S4_R8 + PCA', 'S8_R8', 'S8_R8 + PCA']
 
+    # check which scores file is missing
+    missing_outs = []
+    for data_item in data_list:
+        for model_item in model_names:
+            scores_item = data_nm + data_item + '.' + model_item + '.scores' # create the complete path to scores file
+            if os.path.isfile(scores_item):
+                print('yes')
+            else:
+                missing_outs.append(scores_item)
+    print('Missing files:\n', missing_outs)
+
     # get the saved cv scores
     df = pd.DataFrame()
     df_cv = pd.DataFrame()
@@ -164,13 +175,3 @@ if __name__ == '__main__':
 
             else:
                 error_models.append(model_item)
-
-
-
-
-
-
-
-
-
-

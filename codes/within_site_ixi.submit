@@ -25,7 +25,7 @@ error          = $(initial_dir)/../logs/$(result).$(model).err
 # --pca_status: 0 or 1
 
 
-arguments = test_package_env python3 within_site_train.py --demographics_file ../data/ixi/ixi_subject_list_cat12.8.csv --features_file ../data/ixi/$(data) --output_path ../results/ixi --output_prefix ixi/$(result) --models $(model) --pca_status $(pca)
+arguments = test_package_env python3 within_site_train.py --demographics_file ../data/ixi/ixi.subject_list_cat12.8.csv --features_file ../data/ixi/$(data) --output_path ../results/ixi --output_prefix $(result) --models $(model) --pca_status $(pca)
 
 ########## 173 parcels
 data = ixi.173
@@ -47,8 +47,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue
 
 
 
@@ -72,8 +72,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue
 
 
 
@@ -97,8 +97,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue
 
 
 
@@ -122,8 +122,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue
 
 
 
@@ -147,8 +147,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue
 
 
 
@@ -172,8 +172,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue
 
 
 
@@ -197,8 +197,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue
 
 
 
@@ -222,8 +222,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue
 
 
 ########## S8_R4
@@ -246,8 +246,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue
 
 
 
@@ -272,8 +272,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue
 
 ##################### PCA
 ########## S0_R4
@@ -296,8 +296,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue
 
 
 
@@ -321,8 +321,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue
 
 
 
@@ -346,8 +346,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue
 
 
 
@@ -371,9 +371,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
-
+#model = xgb
+#queue
 
 ########## S8_R4
 data = ixi.S8_R4
@@ -395,8 +394,8 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue
 
 
 
@@ -421,5 +420,5 @@ model = elasticnet
 queue
 model = rvr_poly
 queue
-model = xgb
-queue
+#model = xgb
+#queue

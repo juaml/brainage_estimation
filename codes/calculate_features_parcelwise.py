@@ -17,9 +17,9 @@ if __name__ == '__main__':
     # python3 calculate_features_parcelwise.py --features_path ../data/ixi/ --subject_filepaths ../data/ixi/ixi_paths_cat12.8.csv --output_prefix ixi --mask_file ../masks/BSF_173.nii --num_parcels 173
    
     # example inputs
-    # features_path = Path('../data/ADNI/')
-    # subject_filepaths = '../data/ADNI_paths_cat12.8.csv'
-    # output_prefix = 'ADNI'
+    # features_path = Path('../data/ixi/')
+    # subject_filepaths = '../data/ixi_paths_cat12.8.csv'
+    # output_prefix = 'ixi'
     # mask_file = '../masks/BSF_173.nii'
     # num_parcels = 173
 

@@ -19,10 +19,9 @@ log            = $(initial_dir)/../logs/$(data_name).$(Process).log
 output         = $(initial_dir)/../logs/$(data_name).$(Process).out
 error          = $(initial_dir)/../logs/$(data_name).$(Process).err
 
-# IXI
-
-data_name = ixi
-subject_filepaths_csv = ixi_paths_cat12.8.csv 
+# 1000brains (change data_name and subject_filepaths_csv to run for different dataset)
+data_name = 1000brains
+subject_filepaths_csv = 1000brains.paths_cat12.8.csv 
 
 arguments = test_package_env python3 calculate_features_voxelwise.py --features_path ../data/$(data_name)/ --subject_filepaths ../data/$(data_name)/$(subject_filepaths_csv) --output_prefix $(data_name) --mask_file ../masks/brainmask_12.8.nii --smooth_fwhm 0 --resample_size 4
 queue

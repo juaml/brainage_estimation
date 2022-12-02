@@ -88,7 +88,7 @@ if __name__ == "__main__":
     # Create directories, create features if they don't exists
     output_path.mkdir(exist_ok=True, parents=True)
     features_path.mkdir(exist_ok=True, parents=True)
-    features_filename = str(output_prefix) + '_S' + str(smooth_fwhm) + '_R' + str(resample_size)
+    features_filename = str(output_prefix) + '.S' + str(smooth_fwhm) + '_R' + str(resample_size)
     features_fullfile = os.path.join(features_path, features_filename)
     print('\nfilename for features created: ', features_fullfile)
 

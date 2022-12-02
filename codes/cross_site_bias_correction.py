@@ -142,14 +142,3 @@ if __name__ == '__main__':
     pickle.dump(model_bias_params, open(bias_params_savepath, 'wb'))
 
     print('ALL DONE')
-
-
-
-
-
-
-
-
-
-
-

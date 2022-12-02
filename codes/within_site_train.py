@@ -45,7 +45,7 @@ if __name__ == '__main__':
     output_prefix = args.output_prefix
     model_required = [x.strip() for x in args.models.split(',')]  # converts string into list
     pca_status = bool(args.pca_status)
-    output_path.mkdir(exist_ok=True, parents=True)
+    output_path.mkdir(exist_ok=True, parents=True) # check and create output directory
 
     # initialize random seed and create test indices
     rand_seed = 200
@@ -113,19 +113,20 @@ if __name__ == '__main__':
                         'xgboostadapted__max_depth': [6, 8, 10, 12], 'xgboostadapted__n_estimators': 100,
                         'xgboostadapted__reg_alpha': [0.001, 0.01, 0.05, 0.1, 0.2],
                         'xgboostadapted__random_seed': rand_seed, 'cv': 5}]  # 'search_params':{'n_jobs': 5}
-
+    
+    # Define processing for X (features)
+    if pca_status:
+        preprocess_X = ['variancethreshold', 'zscore', pca]
+    else:
+        preprocess_X = ['variancethreshold', 'zscore']
+    print('Preprocessing includes:', preprocess_X)
+    
     # Get the model, its parameters, pca status and train
     for ind in range(0, len(model_required)):
         print('model required:', model_required[ind])
         i = model_names.index(model_required[ind])
         assert model_required[ind] == model_names[i]  # sanity check
         print('model picked from the list', model_names[i], model_list[i], '\n')
-
-        if pca_status:
-            preprocess_X = ['variancethreshold', 'zscore', pca]
-        else:
-            preprocess_X = ['variancethreshold', 'zscore']
-        print('Preprocessing includes:', preprocess_X)
 
         # initialize dictionaries to save scores, models and results here to save every model separately
         scores_cv = {k: {} for k in test_indices.keys()}
