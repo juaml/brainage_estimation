@@ -29,7 +29,7 @@ def read_data_cross_site(data_file, train_status, confounds):
     
 def read_data(features_file, demographics_file):
     data_df = pickle.load(open(features_file, 'rb')) # read the data
-    demo = pd.read_csv(demographics_file, ',')     # read demographics file
+    demo = pd.read_csv(demographics_file)     # read demographics file
     data_df = pd.concat([demo[['site', 'subject', 'age', 'gender']], data_df], axis=1) # merge them
 
     print('Data columns:', data_df.columns)
