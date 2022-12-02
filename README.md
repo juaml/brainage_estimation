@@ -51,7 +51,7 @@ It is possible to calculate features from a list of CAT12.8 files.
 
 Voxel-wise features
 ```
-python3 calculate_voxelwise_features.py \
+python3 calculate_features_voxelwise.py \
     --features_path ../data/ADNI/ \
     --subject_filepaths ../data/ADNI/ADNI_paths_cat12.8.csv \
     --output_prefix ADNI \
