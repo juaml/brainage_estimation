@@ -1,0 +1,47 @@
+# The environment
+universe       = vanilla
+getenv         = True
+
+# resources
+request_cpus   = 1
+request_memory = 5G
+
+# Execution
+initial_dir    = .
+executable     = $(initial_dir)/run_in_venv.sh
+
+# Job
+#log            = $(initial_dir)/../logs/$(Cluster).$(Process).log
+#output         = $(initial_dir)/../logs/$(Cluster).$(Process).out
+#error          = $(initial_dir)/../logs/$(Cluster).$(Process).err
+
+log            = $(initial_dir)/../logs/$(data_name).$(Process).log
+output         = $(initial_dir)/../logs/$(data_name).$(Process).out
+error          = $(initial_dir)/../logs/$(data_name).$(Process).err
+
+# IXI
+
+data_name = ixi
+subject_filepaths_csv = ixi_paths_cat12.8.csv 
+
+arguments = test_package_env python3 calculate_features_voxelwise.py --features_path ../data/$(data_name)/ --subject_filepaths ../data/$(data_name)/$(subject_filepaths_csv) --output_prefix $(data_name) --mask_file ../masks/brainmask_12.8.nii --smooth_fwhm 0 --resample_size 4
+queue
+arguments = test_package_env python3 calculate_features_voxelwise.py --features_path ../data/$(data_name)/ --subject_filepaths ../data/$(data_name)/$(subject_filepaths_csv) --output_prefix $(data_name) --mask_file ../masks/brainmask_12.8.nii --smooth_fwhm 0 --resample_size 8
+queue
+arguments = test_package_env python3 calculate_features_voxelwise.py --features_path ../data/$(data_name)/ --subject_filepaths ../data/$(data_name)/$(subject_filepaths_csv) --output_prefix $(data_name) --mask_file ../masks/brainmask_12.8.nii --smooth_fwhm 4 --resample_size 4
+queue
+arguments = test_package_env python3 calculate_features_voxelwise.py --features_path ../data/$(data_name)/ --subject_filepaths ../data/$(data_name)/$(subject_filepaths_csv) --output_prefix $(data_name) --mask_file ../masks/brainmask_12.8.nii --smooth_fwhm 4 --resample_size 8
+queue
+arguments = test_package_env python3 calculate_features_voxelwise.py --features_path ../data/$(data_name)/ --subject_filepaths ../data/$(data_name)/$(subject_filepaths_csv) --output_prefix $(data_name) --mask_file ../masks/brainmask_12.8.nii --smooth_fwhm 8 --resample_size 4
+queue
+arguments = test_package_env python3 calculate_features_voxelwise.py --features_path ../data/$(data_name)/ --subject_filepaths ../data/$(data_name)/$(subject_filepaths_csv) --output_prefix $(data_name) --mask_file ../masks/brainmask_12.8.nii --smooth_fwhm 8 --resample_size 8
+queue
+arguments = test_package_env python3 calculate_features_parcelwise.py --features_path ../data/$(data_name)/ --subject_filepaths ../data/$(data_name)/$(subject_filepaths_csv) --output_prefix $(data_name) --mask_file ../masks/BSF_173.nii --num_parcels 173
+queue
+arguments = test_package_env python3 calculate_features_parcelwise.py --features_path ../data/$(data_name)/ --subject_filepaths ../data/$(data_name)/$(subject_filepaths_csv) --output_prefix $(data_name) --mask_file ../masks/BSF_473.nii --num_parcels 473
+queue
+arguments = test_package_env python3 calculate_features_parcelwise.py --features_path ../data/$(data_name)/ --subject_filepaths ../data/$(data_name)/$(subject_filepaths_csv) --output_prefix $(data_name) --mask_file ../masks/BSF_873.nii --num_parcels 873
+queue
+arguments = test_package_env python3 calculate_features_parcelwise.py --features_path ../data/$(data_name)/ --subject_filepaths ../data/$(data_name)/$(subject_filepaths_csv) --output_prefix $(data_name) --mask_file ../masks/BSF_1273.nii --num_parcels 1273
+queue
+

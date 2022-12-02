@@ -1,5 +1,5 @@
 #from read_data_mask_resampled import *
-from brainage import read_sub_data
+from brainage import calculate_voxelwise_features
 from pathlib import Path
 import pandas as pd
 import argparse
@@ -99,7 +99,7 @@ if __name__ == "__main__":
     else:
         print('\n-----Extracting features')
         # create features
-        data_df = read_sub_data(subject_filepaths, mask_file, smooth_fwhm=smooth_fwhm, resample_size=resample_size)
+        data_df = calculate_voxelwise_features(subject_filepaths, mask_file, smooth_fwhm=smooth_fwhm, resample_size=resample_size)
         # save features
         pickle.dump(data_df, open(features_fullfile, "wb"), protocol=4)
         data_df.to_csv(features_fullfile + '.csv', index=False)

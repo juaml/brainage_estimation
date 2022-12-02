@@ -1,9 +1,8 @@
-#!/home/smore/.venvs/py3smore/bin/python3
-from brainage import read_sub_data
 import os
-from pathlib import Path
 import argparse
 import pickle
+from pathlib import Path
+from brainage import calculate_voxelwise_features
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -16,6 +15,15 @@ if __name__ == '__main__':
     parser.add_argument("--smooth_fwhm", type=int, help="smoothing FWHM", default=4)
     parser.add_argument("--resample_size", type=int, help="resampling kernel size", default=4)
 
+    # python3 calculate_features_voxelwise.py --features_path ../data/ixi/ --subject_filepaths ../data/ixi/ixi_paths_cat12.8.csv --output_prefix ixi --mask_file ../masks/brainmask_12.8.nii --smooth_fwhm 4 --resample_size 8
+    
+    # example inputs
+    # features_path = Path('../data/ixi/')
+    # subject_filepaths = '../data/ixi_paths_cat12.8.csv'
+    # output_prefix = 'ixi'
+    # mask_file = '../masks/brainmask_12.8.nii'
+    # smooth_fwhm = 4
+    # resample_size = 8
 
     args = parser.parse_args()
     features_path = Path(args.features_path)
@@ -25,16 +33,6 @@ if __name__ == '__main__':
     smooth_fwhm = args.smooth_fwhm
     resample_size = args.resample_size
 
-    # python3 calculate_features.py --features_path ../data/ADNI/ --subject_filepaths ../data/ADNI/ADNI_paths_cat12.8.csv --output_prefix ADNI --mask_file ../masks/brainmask_12.8.nii --smooth_fwhm 4 --resample_size 8
-    
-    # example inputs
-    # features_path = Path('../data/ADNI/')
-    # subject_filepaths = '../data/ADNI_paths_cat12.8.csv'
-    # output_prefix = 'ADNI'
-    # mask_file = '../masks/brainmask_12.8.nii'
-    # smooth_fwhm = 4
-    # resample_size = 8
-
     print('Subjects filepaths: ', subject_filepaths)
     print('Directory to features path: ',  features_path)
     print('Results filename prefix: ', output_prefix)
@@ -42,7 +40,7 @@ if __name__ == '__main__':
     print('smooth_fwhm:', smooth_fwhm)
     print('resample_size:', resample_size, '/n')
 
-    data_resampled = read_sub_data(subject_filepaths, mask_file, smooth_fwhm=smooth_fwhm, resample_size=resample_size)
+    data_resampled = calculate_voxelwise_features(subject_filepaths, mask_file, smooth_fwhm=smooth_fwhm, resample_size=resample_size)
 
     features_path.mkdir(exist_ok=True, parents=True)
 

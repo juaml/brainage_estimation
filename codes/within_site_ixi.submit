@@ -25,11 +25,11 @@ error          = $(initial_dir)/../logs/$(result).$(model).err
 # --pca_status: 0 or 1
 
 
-arguments = test_package_env python3 within_site_train.py --demo_path ../data/ixi/ixi_subject_list_cat12.8.csv --data_path ../data/ixi/$(data) --output_filenm ixi/$(result) --models $(model) --pca_status $(pca)
+arguments = test_package_env python3 within_site_train.py --demographics_file ../data/ixi/ixi_subject_list_cat12.8.csv --features_file ../data/ixi/$(data) --output_path ../results/ixi --output_prefix ixi/$(result) --models $(model) --pca_status $(pca)
 
 ########## 173 parcels
-data = ixi_173
-result = ixi_173
+data = ixi.173
+result = ixi.173
 pca = 0
 model = ridge
 queue
@@ -53,8 +53,8 @@ queue
 
 
 ########## 473 parcels
-data = ixi_473
-result = ixi_473
+data = ixi.473
+result = ixi.473
 pca = 0
 model = ridge
 queue
@@ -78,8 +78,8 @@ queue
 
 
 ########## 873 parcels
-data = ixi_873
-result = ixi_873
+data = ixi.873
+result = ixi.873
 pca = 0
 model = ridge
 queue
@@ -103,8 +103,8 @@ queue
 
 
 ########## 1273 parcels
-data = ixi_1273
-result = ixi_1273
+data = ixi.1273
+result = ixi.1273
 pca = 0
 model = ridge
 queue
@@ -128,8 +128,8 @@ queue
 
 
 ########## S0_R4
-data = ixi_S0_R4
-result = ixi_S0_R4
+data = ixi.S0_R4
+result = ixi.S0_R4
 pca = 0
 model = ridge
 queue
@@ -153,8 +153,8 @@ queue
 
 
 ########## S0_R8
-data = ixi_S0_R8
-result = ixi_S0_R8
+data = ixi.S0_R8
+result = ixi.S0_R8
 pca = 0
 model = ridge
 queue
@@ -178,8 +178,8 @@ queue
 
 
 ########## S4_R4
-data = ixi_S4_R4
-result = ixi_S4_R4
+data = ixi.S4_R4
+result = ixi.S4_R4
 pca = 0
 model = ridge
 queue
@@ -203,8 +203,8 @@ queue
 
 
 ########## S4_R8
-data = ixi_S4_R8
-result = ixi_S4_R8
+data = ixi.S4_R8
+result = ixi.S4_R8
 pca = 0
 model = ridge
 queue
@@ -227,8 +227,8 @@ queue
 
 
 ########## S8_R4
-data = ixi_S8_R4
-result = ixi_S8_R4
+data = ixi.S8_R4
+result = ixi.S8_R4
 pca = 0
 model = ridge
 queue
@@ -253,8 +253,8 @@ queue
 
 
 ########## S8_R8
-data = ixi_S8_R8
-result = ixi_S8_R8
+data = ixi.S8_R8
+result = ixi.S8_R8
 pca = 0
 model = ridge
 queue
@@ -277,8 +277,8 @@ queue
 
 ##################### PCA
 ########## S0_R4
-data = ixi_S0_R4
-result = ixi_S0_R4_pca
+data = ixi.S0_R4
+result = ixi.S0_R4_pca
 pca = 1
 model = ridge
 queue
@@ -302,8 +302,8 @@ queue
 
 
 ########## S0_R8
-data = ixi_S0_R8
-result = ixi_S0_R8_pca
+data = ixi.S0_R8
+result = ixi.S0_R8_pca
 pca = 1
 model = ridge
 queue
@@ -327,8 +327,8 @@ queue
 
 
 ########## S4_R4
-data = ixi_S4_R4
-result = ixi_S4_R4_pca
+data = ixi.S4_R4
+result = ixi.S4_R4_pca
 pca = 1
 model = ridge
 queue
@@ -352,8 +352,8 @@ queue
 
 
 ########## S4_R8
-data = ixi_S4_R8
-result = ixi_S4_R8_pca
+data = ixi.S4_R8
+result = ixi.S4_R8_pca
 pca = 1
 model = ridge
 queue
@@ -376,8 +376,8 @@ queue
 
 
 ########## S8_R4
-data = ixi_S8_R4
-result = ixi_S8_R4_pca
+data = ixi.S8_R4
+result = ixi.S8_R4_pca
 pca = 1
 model = ridge
 queue
@@ -402,8 +402,8 @@ queue
 
 
 ########## S8_R8
-data = ixi_S8_R8
-result = ixi_S8_R8_pca
+data = ixi.S8_R8
+result = ixi.S8_R8_pca
 pca = 1
 model = ridge
 queue
