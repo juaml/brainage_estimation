@@ -45,17 +45,29 @@ The predictions will be performed using the S4_R4_pca+gauss model.
 The model will perform `PCA` based on the model used.
 Note that if the features are available in the `--features_path` then they will not be recalculated.
 
-3. **calculate features**
+3. **calculate features: voxel-wise and parcel-wise features**
         
 It is possible to calculate features from a list of CAT12.8 files.
+
+Voxel-wise features
 ```
-python3 calculate_features.py \
+python3 calculate_voxelwise_features.py \
     --features_path ../data/ADNI/ \
     --subject_filepaths ../data/ADNI/ADNI_paths_cat12.8.csv \
     --output_prefix ADNI \
     --mask_file ../masks/brainmask_12.8.nii \
     --smooth_fwhm 4 \
     --resample_size 8 \
+```
+
+Parcel-wise features
+```
+python3 calculate_features_parcelwise.py \
+    --features_path ../data/ADNI/ \
+    --subject_filepaths ../data/ADNI/ADNI_paths_cat12.8.csv \
+    --output_prefix ADNI \
+    --mask_file ../masks/BSF_173.nii \
+    --num_parcels 173 \
 ```
     
 4. **Within-site: Train models**
