@@ -53,7 +53,7 @@ Voxel-wise features
 ```
 python3 calculate_features_voxelwise.py \
     --features_path ../data/ADNI/ \
-    --subject_filepaths ../data/ADNI/ADNI_paths_cat12.8.csv \
+    --subject_filepaths ../data/ADNI/ADNI.paths_cat12.8.csv \
     --output_prefix ADNI \
     --mask_file ../masks/brainmask_12.8.nii \
     --smooth_fwhm 4 \
@@ -64,7 +64,7 @@ Parcel-wise features
 ```
 python3 calculate_features_parcelwise.py \
     --features_path ../data/ADNI/ \
-    --subject_filepaths ../data/ADNI/ADNI_paths_cat12.8.csv \
+    --subject_filepaths ../data/ADNI/ADNI.paths_cat12.8.csv \
     --output_prefix ADNI \
     --mask_file ../masks/BSF_173.nii \
     --num_parcels 173 \
@@ -74,7 +74,7 @@ python3 calculate_features_parcelwise.py \
         
 ```
 python3 within_site_train.py \
-    --demographics_file ../data/ixi/ixi_subject_list_cat12.8.csv \
+    --demographics_file ../data/ixi/ixi.subject_list_cat12.8.csv \
     --features_file ../data/ixi/ixi.173 \
     --output_path ../results/ixi \
     --output_prefix ixi.173 \
@@ -104,7 +104,13 @@ In case you are using `HTcondor`, you can also use the provided submit file.
 
 6. **Within-site: Get predictions from 128 workflows**  
         
-`python3 within_site_combine_predictions.py --data_nm ../results/ixi/ixi.`
+```
+python3 within_site_combine_predictions.py \
+    --demographics_file ../data/ixi/ixi.subject_list_cat12.8.csv \
+    --features_path ../data/ixi/ixi. \
+    --model_path ../results/ixi/ixi. \
+    --output_prefix all_models_pred
+ ```
         
 7. **Within-site: Bias correction**
         
@@ -125,11 +131,13 @@ python3 cross_site_train.py \
 ```
 
 Now we can make predictions on the hold-out site using all models available in the `--model_folder`.
-```
+```  
 python3 cross_site_combine_predictions.py \
-    --model_folder /ixi_camcan_enki/ixi_camcan_enki. \
-    --test_data_name /1000brains/1000brains. \
-    --save_file_ext pred_1000brains_all
+    --demographics_file ../data/1000brains/1000brains.subject_list_cat12.8.csv \
+    --features_path ../data/1000brains/1000brains. \
+    --model_path ../results/ixi_camcan_enki/ixi_camcan_enki. \
+    --output_prefix pred_1000brains_all
+
 ```
 
 9. **Cross-site: Read results from saved models**  
