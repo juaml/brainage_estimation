@@ -99,12 +99,12 @@ In case you are using `HTcondor`, you can also use the provided submit file.
 
 5. **Within-site: Read results from saved models**  
         
-`python3 within_site_read_results.py --data_nm ../results/ixi/ixi_`
+`python3 within_site_read_results.py --data_nm ../results/ixi/ixi.`
 
 
 6. **Within-site: Get predictions from 128 workflows**  
         
-`python3 within_site_combine_predictions.py --data_nm ../results/ixi/ixi_`
+`python3 within_site_combine_predictions.py --data_nm ../results/ixi/ixi.`
         
 7. **Within-site: Bias correction**
         
@@ -136,14 +136,14 @@ python3 cross_site_combine_predictions.py \
         
 Create cross-validation scores from cross-site predictions.
         
-`python3 cross_site_read_results.py --data_nm ../results/ixi_camcan_enki/ixi_camcan_enki_`
+`python3 cross_site_read_results.py --data_nm ../results/ixi_camcan_enki/ixi_camcan_enki.`
 
      
 10. **Cross-site: Bias correction**
 
 ```
 python3 cross_site_bias_correction.py \
-    --data_path ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains_S4_R4 \
-    --output_filenm ixi_camcan_enki_1000brains/4sites_S4_R4_pca_cv.gauss \
+    --data_path ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains.S4_R4 \
+    --output_filenm ixi_camcan_enki_1000brains/4sites.S4_R4_pca_cv.gauss \
     --mod_nm gauss
 ```
