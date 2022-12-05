@@ -114,7 +114,11 @@ python3 within_site_combine_predictions.py \
         
 7. **Within-site: Bias correction**
         
-`python3 within_site_bias_correction.py --dataset_flag ixi`
+```
+python3 within_site_bias_correction.py 
+    --input_predictions_file ../results/ixi/ixi.all_models_pred.csv 
+    --BC_predictions_file ../results/ixi/ixi.all_models_pred_BC.csv
+```
 
 
 8. **Cross-site: Train and test**  
