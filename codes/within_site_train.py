@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 
-from brainage import stratified_splits, read_data, XGBoostAdapted
+from brainage import stratified_splits, read_data, XGBoostAdapted, performance_metric
 
 import xgboost as xgb
 from skrvm import RVR
@@ -16,7 +16,6 @@ from sklearn.kernel_ridge import KernelRidge
 from sklearn.decomposition import PCA
 from sklearn.feature_selection import VarianceThreshold
 from sklearn.model_selection import RepeatedStratifiedKFold
-from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 from julearn import run_cross_validation
 from julearn.utils import configure_logging
@@ -167,9 +166,8 @@ if __name__ == '__main__':
             y_pred = model.predict(test_df[X]).ravel()
             y_delta = y_true - y_pred
             print(y_true.shape, y_pred.shape)
-            mae = round(mean_absolute_error(y_true, y_pred), 3)
-            mse = round(mean_squared_error(y_true, y_pred), 3)
-            corr = round(np.corrcoef(y_pred, y_true)[1, 0], 3)
+            
+            mae, mse, corr = performance_metric(y_true, y_pred)
             print('MAE:', mae, 'MSE:', mse, 'CoRR', corr)
             results[repeat_key][model_names[i]] = {'predictions': y_pred, 'true': y_true, 'test_idx': test_idx,
                                                    'delta': y_delta, 'mae': mae, 'mse': mse, 'corr': corr}
