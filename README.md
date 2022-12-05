@@ -155,7 +155,7 @@ Create cross-validation scores from cross-site predictions.
 
 ```
 python3 cross_site_bias_correction.py \
-    --data_path ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains.S4_R4 \
-    --output_filenm ixi_camcan_enki_1000brains/4sites.S4_R4_pca_cv.gauss \
-    --mod_nm gauss
+    --demographics_file ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains.subject_list_cat12.8.csv \
+    --features_file ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains.S4_R4 \
+    --model_file ../results/ixi_camcan_enki_1000brains/4sites.S4_R4_pca_cv.gauss
 ```
