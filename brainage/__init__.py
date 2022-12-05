@@ -6,4 +6,6 @@ from .create_splits import repeated_stratified_splits
 from .read_data import read_data_cross_site
 from .read_data import read_data
 from .define_models import define_models
+from sklearn.linear_model import LinearRegression
+from .performance_metric import performance_metric
 
