@@ -17,19 +17,23 @@ transfer_executable = False
 #output         = $(initial_dir)/../logs/$(Cluster).$(Process).out
 #error          = $(initial_dir)/../logs/$(Cluster).$(Process).err
 
-log            = $(initial_dir)/../logs/$(result).$(model).log
-output         = $(initial_dir)/../logs/$(result).$(model).out
-error          = $(initial_dir)/../logs/$(result).$(model).err
+log            = $(initial_dir)/../logs/$(result_prefix).$(model).log
+output         = $(initial_dir)/../logs/$(result_prefix).$(model).out
+error          = $(initial_dir)/../logs/$(result_prefix).$(model).err
 
 # --models: 'ridge', 'rf', 'rvr_lin', 'kernel_ridge', 'gauss', 'lasso', 'elasticnet', 'rvr_poly', 'xgb'
 # --pca_status: 0 or 1
 
+# enki (change data_name and subject_filepaths_csv to run for different dataset)
+data_name = ixi
+subject_filepaths_csv = ixi.subject_list_cat12.8.csv
 
-arguments = test_package_env python3 within_site_train.py --demographics_file ../data/ixi/ixi.subject_list_cat12.8.csv --features_file ../data/ixi/$(data) --output_path ../results/ixi --output_prefix $(result) --models $(model) --pca_status $(pca)
+arguments = test_package_env python3 within_site_train.py --demographics_file ../data/$(data_name)/$(subject_filepaths_csv) --features_file ../data/$(data_name)/$(feature_name) --output_path ../results/$(data_name) --output_prefix $(result_prefix) --models $(model) --pca_status $(pca)
 
 ########## 173 parcels
-data = ixi.173
-result = ixi.173
+feature_name = $(data_name).173
+result_prefix = $(data_name).173
+
 pca = 0
 model = ridge
 queue
@@ -53,8 +57,8 @@ queue
 
 
 ########## 473 parcels
-data = ixi.473
-result = ixi.473
+feature_name = $(data_name).473
+result_prefix = $(data_name).473
 pca = 0
 model = ridge
 queue
@@ -78,8 +82,8 @@ queue
 
 
 ########## 873 parcels
-data = ixi.873
-result = ixi.873
+feature_name = $(data_name).873
+result_prefix = $(data_name).873
 pca = 0
 model = ridge
 queue
@@ -103,8 +107,8 @@ queue
 
 
 ########## 1273 parcels
-data = ixi.1273
-result = ixi.1273
+feature_name = $(data_name).1273
+result_prefix = $(data_name).1273
 pca = 0
 model = ridge
 queue
@@ -128,8 +132,8 @@ queue
 
 
 ########## S0_R4
-data = ixi.S0_R4
-result = ixi.S0_R4
+feature_name = $(data_name).S0_R4
+result_prefix = $(data_name).S0_R4
 pca = 0
 model = ridge
 queue
@@ -153,8 +157,8 @@ queue
 
 
 ########## S0_R8
-data = ixi.S0_R8
-result = ixi.S0_R8
+feature_name = $(data_name).S0_R8
+result_prefix = $(data_name).S0_R8
 pca = 0
 model = ridge
 queue
@@ -178,8 +182,8 @@ queue
 
 
 ########## S4_R4
-data = ixi.S4_R4
-result = ixi.S4_R4
+feature_name = $(data_name).S4_R4
+result_prefix = $(data_name).S4_R4
 pca = 0
 model = ridge
 queue
@@ -203,8 +207,8 @@ queue
 
 
 ########## S4_R8
-data = ixi.S4_R8
-result = ixi.S4_R8
+feature_name = $(data_name).S4_R8
+result_prefix = $(data_name).S4_R8
 pca = 0
 model = ridge
 queue
@@ -227,8 +231,8 @@ queue
 
 
 ########## S8_R4
-data = ixi.S8_R4
-result = ixi.S8_R4
+feature_name = $(data_name).S8_R4
+result_prefix = $(data_name).S8_R4
 pca = 0
 model = ridge
 queue
@@ -253,8 +257,8 @@ queue
 
 
 ########## S8_R8
-data = ixi.S8_R8
-result = ixi.S8_R8
+feature_name = $(data_name).S8_R8
+result_prefix = $(data_name).S8_R8
 pca = 0
 model = ridge
 queue
@@ -276,9 +280,9 @@ queue
 #queue
 
 ##################### PCA
-########## S0_R4
-data = ixi.S0_R4
-result = ixi.S0_R4_pca
+########## S0_R4_pca
+feature_name = $(data_name).S0_R4
+result_prefix = $(data_name).S0_R4_pca
 pca = 1
 model = ridge
 queue
@@ -301,9 +305,9 @@ queue
 
 
 
-########## S0_R8
-data = ixi.S0_R8
-result = ixi.S0_R8_pca
+########## S0_R8_pca
+feature_name = $(data_name).S0_R8
+result_prefix = $(data_name).S0_R8_pca
 pca = 1
 model = ridge
 queue
@@ -326,9 +330,9 @@ queue
 
 
 
-########## S4_R4
-data = ixi.S4_R4
-result = ixi.S4_R4_pca
+########## S4_R4_pca
+feature_name = $(data_name).S4_R4
+result_prefix = $(data_name).S4_R4_pca
 pca = 1
 model = ridge
 queue
@@ -351,9 +355,9 @@ queue
 
 
 
-########## S4_R8
-data = ixi.S4_R8
-result = ixi.S4_R8_pca
+########## S4_R8_pca
+feature_name = $(data_name).S4_R8
+result_prefix = $(data_name).S4_R8_pca
 pca = 1
 model = ridge
 queue
@@ -374,9 +378,9 @@ queue
 #model = xgb
 #queue
 
-########## S8_R4
-data = ixi.S8_R4
-result = ixi.S8_R4_pca
+########## S8_R4_pca
+feature_name = $(data_name).S8_R4
+result_prefix = $(data_name).S8_R4_pca
 pca = 1
 model = ridge
 queue
@@ -401,8 +405,8 @@ queue
 
 
 ########## S8_R8
-data = ixi.S8_R8
-result = ixi.S8_R8_pca
+feature_name = $(data_name).S8_R8
+result_prefix = $(data_name).S8_R8_pca
 pca = 1
 model = ridge
 queue
