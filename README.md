@@ -16,7 +16,7 @@ After the set up following codes can be run as provided in the `codes` directory
 
 2. **Get predictions** 
 
-We provide pretrained models that can used to obrain predictions on new samples.
+We provide pretrained models that can used to obtain predictions on new samples.
 
 ```
 python3 predict_age.py \
