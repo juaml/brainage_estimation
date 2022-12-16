@@ -30,7 +30,6 @@ if __name__ == '__main__':
     parser.add_argument("--demographics_file", type=str, help="Demographics file path") # age and group is mandatory
     parser.add_argument("--predictions_file", type=str, help="Predictions file path")
     parser.add_argument("--predictions_column_name", type=str, help="Predictions", default='S4_R4_pca+gauss')
-    parser.add_argument("--output_path", type=str, help="path to output_dir")  # eg'../results/ADNI'
     parser.add_argument("--output_prefix", type=str, help="prefix added to features filename ans results (predictions) file name", default='.BC') # eg: 'ADNI'
 
     # read arguments
@@ -38,31 +37,16 @@ if __name__ == '__main__':
     demographics_file = args.demographics_file
     predictions_file = args.predictions_file
     predictions_column_name = args.predictions_column_name
-    output_path = (args.output_path)
     output_prefix = args.output_prefix
 
-
+    # example
     # python3 cross_site_bias_correction_using_CN.py \
     #     --demographics_file ../data/ADNI/ADNI.subject_list_cat12.8.csv \
     #     --predictions_file ../results/ADNI/ADNI_S4_R4_pca.gauss_prediction.csv \
     #     --predictions_column_name S4_R4_pca+gauss \
-    #     --output_path ../results/ADNI/ \
     #     --output_prefix _BC
 
-    # python3 cross_site_bias_correction_using_CN.py \
-    #     --demographics_file ../data/astronaut/demo_fake.csv \
-    #     --predictions_file ../results/astronaut/filename_prediction.csv \
-    #     --predictions_column_name S4_R4_pca+gauss \
-    #     --output_path ../results/astronaut/ \
-    #     --output_prefix _BC
-
-    # demographics_file = '../data/ADNI/ADNI.subject_list_cat12.8.csv'
-    # predictions_file = '../results/ADNI/ADNI_S4_R4_pca.gauss_prediction.csv'
-    # predictions_column_name = 'S4_R4_pca+gauss'
-    # output_path = '../results/ADNI/'
-    # output_prefix = '_BC'
-
-    # creating output filename same as imput predictions file name but with  prefix
+    # creating output filename same as imput predictions file name but adding output_prefix
     predictions_file_name_BC = predictions_file.replace('.csv', output_prefix + '.csv')
 
     demographics = pd.read_csv(demographics_file)
