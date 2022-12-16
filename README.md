@@ -163,6 +163,7 @@ python3 cross_site_bias_correction.py \
 ```
 
 Using the control subjects from the testing data: 
+
 This code will train bias correction model using the predictions and age from the control group (`CN`) group and apply to it the full sample. It needs `demographics_file` which should contain `age` and `Research Group` columns, and `Research Group` column should contain `CN` category. `predictions_file` should contain a column for predictions defined by `predictions_column_name`. The bias corrected predictions will be saved in the same location as `predictions_file` with a prefix defined by `output_prefix`.
 
 ```
