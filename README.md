@@ -169,7 +169,7 @@ This code will train bias correction model using the predictions and age from th
 ```
 python3 cross_site_bias_correction_using_CN.py \
     --demographics_file ../data/ADNI/ADNI.subject_list_cat12.8.csv \
-    --predictions_file ../results/ADNI/ADNI_S4_R4_pca.gauss_prediction.csv \
+    --predictions_file ../results/ADNI/ADNI.S4_R4_pca.gauss.prediction.csv \
     --predictions_column_name S4_R4_pca+gauss \
     --output_prefix _BC
 ```
