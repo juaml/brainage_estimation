@@ -153,9 +153,22 @@ Create cross-validation scores from cross-site predictions.
      
 10. **Cross-site: Bias correction**
 
+Using the CV predictions from the training data:
+
 ```
 python3 cross_site_bias_correction.py \
     --demographics_file ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains.subject_list_cat12.8.csv \
     --features_file ../data/ixi_camcan_enki_1000brains/ixi_camcan_enki_1000brains.S4_R4 \
     --model_file ../results/ixi_camcan_enki_1000brains/4sites.S4_R4_pca_cv.gauss
+```
+
+Using the control subjects from the testing data: 
+This code will train bias correction model using the predictions and age from the control group (`CN`) group and apply to it the full sample. It needs `demographics_file` which should contain `age` and `Research Group` columns, and `Research Group` column should contain `CN` category. `predictions_file` should contain a column for predictions defined by `predictions_column_name`. The bias corrected predictions will be saved in the same location as `predictions_file` with a prefix defined by `output_prefix`.
+
+```
+python3 cross_site_bias_correction_using_CN.py \
+    --demographics_file ../data/ADNI/ADNI.subject_list_cat12.8.csv \
+    --predictions_file ../results/ADNI/ADNI_S4_R4_pca.gauss_prediction.csv \
+    --predictions_column_name S4_R4_pca+gauss \
+    --output_prefix _BC
 ```
