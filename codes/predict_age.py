@@ -109,7 +109,7 @@ if __name__ == "__main__":
     try:
         predictions_df = model_pred(data_df, model_file, feature_space_str)
         # save predictions
-        predictions_filename = str(output_prefix) + '_' + pipeline_name + '_prediction.csv'
+        predictions_filename = str(output_prefix) + '.' + pipeline_name + '.prediction.csv'
         predictions_fullfile = os.path.join(output_path, predictions_filename)
         print('\nfilename for predictions created: ', predictions_fullfile)
         predictions_df.to_csv(predictions_fullfile, index=False)
