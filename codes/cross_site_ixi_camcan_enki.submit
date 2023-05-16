@@ -3,8 +3,8 @@ universe       = vanilla
 getenv         = True
 
 # resources
-request_cpus   = 5
-request_memory = 10G
+request_cpus   = 10
+request_memory = 5G
 
 
 # Execution
@@ -12,28 +12,40 @@ initial_dir    = .
 executable     = $(initial_dir)/run_in_venv.sh
 transfer_executable = False
 
-# Logs
-#log            = $(initial_dir)/../logs/$(Cluster).$(Process).log
-#output         = $(initial_dir)/../logs/$(Cluster).$(Process).out
-#error          = $(initial_dir)/logs/$(Cluster).$(Process).err
+#Logs
+log            = $(initial_dir)/../logs/$(result_prefix).$(model).$(Cluster).$(Process).log
+output         = $(initial_dir)/../logs/$(result_prefix).$(model).$(Cluster).$(Process).out
+error          = $(initial_dir)/../logs/$(result_prefix).$(model).$(Cluster).$(Process).err
 
-log            = $(initial_dir)/../logs/$(result).$(model).$(Cluster).$(Process).log
-output         = $(initial_dir)/../logs/$(result).$(model).$(Cluster).$(Process).out
-error          = $(initial_dir)/../logs/$(result).$(model).$(Cluster).$(Process).err
 
 # --models: 'ridge', 'rf', 'rvr_lin', 'kernel_ridge', 'gauss', 'lasso', 'elasticnet', 'rvr_poly', 'xgb'
 # --pca_status: 0 or 1
 
 
-arguments = test_package_env python3 cross_site_train.py --data_path $(data_dir)/$(data) --output_path $(results_dir)/$(result) --models $(model) --confounds None --pca_status $(pca) --n_jobs 5
+data_name = ixi_camcan_enki
+subject_filepaths_csv = ixi_camcan_enki.subject_list_cat12.8.csv
+
+arguments = test_package_env python3 cross_site_train.py --demographics_file ../data/$(data_name)/$(subject_filepaths_csv) --features_file ../data/$(data_name)/$(feature_name) --output_path ../results/$(data_name) --output_prefix $(result_prefix) --models $(model) --pca_status $(pca)
 
 
-data_dir = ../data/ixi_camcan_enki
-results_dir = ../results/ixi_camcan_enki
+########## S4_R8
+feature_name = $(data_name).S4_R8
+result_prefix = $(data_name).S4_R8
+pca = 0
+
+#model = ridge
+#queue
+
+#model = rf
+#queue
+
+model = rvr_poly
+queue
 
 
 ########## 173
-data = ixi_camcan_enki_173
+feature_name = $(data_name).173
+result_prefix = $(data_name).173
 pca = 0
 
 #model = gauss
@@ -42,32 +54,14 @@ pca = 0
 #model = rf
 #queue
 
-#model = lasso
-#queue
-
-model = rvr_lin
+model = lasso
 queue
 
-
-data_dir = ../data/ixi_camcan_enki_1000brains
-results_dir = ../results/ixi_camcan_enki_1000brains
-
-
-########## 173
-data = ixi_camcan_enki_1000brains_173
-pca = 0
-
-#model = gauss
-#queue
-
-#model = rf
-#queue
-
-#model = lasso
-#queue
-
-model = rvr_lin
+model = ridge
 queue
+
+#model = rvr_lin
+#queue
 
 
 

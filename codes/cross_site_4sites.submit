@@ -12,91 +12,66 @@ initial_dir    = .
 executable     = $(initial_dir)/run_in_venv.sh
 transfer_executable = False
 
-# Logs
-#log            = $(initial_dir)/../logs/$(Cluster).$(Process).log
-#output         = $(initial_dir)/../logs/$(Cluster).$(Process).out
-#error          = $(initial_dir)/../logs/$(Cluster).$(Process).err
+#Logs
+log            = $(initial_dir)/../logs/$(result_prefix).$(model).$(Cluster).$(Process).log
+output         = $(initial_dir)/../logs/$(result_prefix).$(model).$(Cluster).$(Process).out
+error          = $(initial_dir)/../logs/$(result_prefix).$(model).$(Cluster).$(Process).err
 
-log            = $(initial_dir)/../logs/$(result).$(model).$(Cluster).$(Process).log
-output         = $(initial_dir)/../logs/$(result).$(model).$(Cluster).$(Process).out
-error          = $(initial_dir)/../logs/$(result).$(model).$(Cluster).$(Process).err
 
 # --models: 'ridge', 'rf', 'rvr_lin', 'kernel_ridge', 'gauss', 'lasso', 'elasticnet', 'rvr_poly', 'xgb'
 # --pca_status: 0 or 1
 
 
-#arguments = test_package_env python3 cross_site_train.py --data_path $(data_dir)/$(data) --output_path $(results_dir)/$(result) --models $(model) --test_data_path $(test_dir)/$(test_data) --confounds None --pca_status $(pca) --n_jobs 10
-arguments = test_package_env python3 cross_site_train.py --data_path $(data_dir)/$(data) --output_path $(results_dir)/$(result) --models $(model) --confounds None --pca_status $(pca) --n_jobs 5
+data_name = ixi_camcan_enki_1000brains
+subject_filepaths_csv = ixi_camcan_enki_1000brains.subject_list_cat12.8.csv
 
+arguments = test_package_env python3 cross_site_train.py --demographics_file ../data/$(data_name)/$(subject_filepaths_csv) --features_file ../data/$(data_name)/$(feature_name) --output_path ../results/$(data_name) --output_prefix $(result_prefix) --models $(model) --pca_status $(pca)
 
-#--------test on ADNI (trained on 4 sites)
-data_dir = ../data/ixi_camcan_enki_1000brains
-results_dir = ../results/ixi_camcan_enki_1000brains
-#test_dir = ../data/adni/new
 
 ########## S4_R4_pca
-data = ixi_camcan_enki_1000brains_S4_R4
-result = 4sites_S4_R4_pca_cv
-test_data = ADNI_S4_R4
+feature_name = $(data_name).S4_R4
+result_prefix = $(data_name).S4_R4_pca
 pca = 1
-model = gauss
+
+#model = ridge
+#queue
+
+#model = rf
+#queue
+
+#model = rvr_lin
+#queue
+
+#model = kernel_ridge
+#queue
+
+#model = gauss
+#queue
+
+#model = lasso
+#queue
+
+#model = elasticnet
+#queue
+
+#model = rvr_poly
+#queue
+
+#model = xgb
+#queue
+
+
+########## 173
+feature_name = $(data_name).173
+result_prefix = $(data_name).173
+pca = 0
+
+model = rvr_lin
 queue
 
 
-#--------test on 1000brains
-data_dir = ../data/ixi_camcan_enki
-results_dir = ../results/ixi_camcan_enki
-test_dir = ../data/1000brains/new
-
-########## S4_R4_pca
-data = ixi_camcan_enki_S4_R4
-result = ixi_camcan_enki_S4_R4_pca_cv
-test_data = 1000brains_S4_R4
-pca = 1
-model = gauss
-queue
 
 
-#--------test on enki
-data_dir = ../data/ixi_camcan_1000brains
-results_dir = ../results/ixi_camcan_1000brains
-test_dir = ../data/enki/new
-
-########## S4_R4_pca
-data = ixi_camcan_1000brains_S4_R4
-result = ixi_camcan_1000brains_S4_R4_pca_cv
-test_data = enki_S4_R4
-pca = 1
-model = gauss
-queue
-
-
-#-------test on camcan
-data_dir = ../data/ixi_enki_1000brains
-results_dir = ../results/ixi_enki_1000brains
-test_dir = ../data/camcan/new
-
-########## S4_R4_pca
-data = ixi_enki_1000brains_S4_R4
-result = ixi_enki_1000brains_S4_R4_pca_cv
-test_data = camcan_S4_R4
-pca = 1
-model = gauss
-queue
-
-
-#-------test on ixi
-data_dir = ../data/camcan_enki_1000brains
-results_dir = ../results/camcan_enki_1000brains
-test_dir = ../data/ixi/new
-
-########## S4_R4_pca
-data = camcan_enki_1000brains_S4_R4
-result = camcan_enki_1000brains_S4_R4_pca_cv
-test_data = ixi_S4_R4
-pca = 1
-model = gauss
-queue
 
 
 
