@@ -205,6 +205,3 @@ Thumbs.db
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,linux,python,visualstudiocode
-
-masks/*.nii
-trained_models/*.models
