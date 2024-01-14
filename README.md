@@ -12,6 +12,14 @@ pip install https://github.com/JamesRitchie/scikit-rvm/archive/master.zip
 pip install glmnet
 ```
 
+Alternatively, you may use Mamba to create an environment including all of the above:
+```
+$ git clone https://github.com/juaml/brainage_estimation.git
+$ cd brainage_estimation
+$ mamba env create --file requirements.yml
+$ mamba activate brainage_estimation
+```
+
 After the set up following codes can be run as provided in the `codes` directory.
 
 2. **Get predictions** 

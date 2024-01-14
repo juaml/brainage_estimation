@@ -1,0 +1,2 @@
+masks/*.nii filter=lfs diff=lfs merge=lfs -text
+trained_models/*.models filter=lfs diff=lfs merge=lfs -text
