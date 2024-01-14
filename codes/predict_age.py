@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 #from read_data_mask_resampled import *
 from brainage import calculate_voxelwise_features
 from pathlib import Path
