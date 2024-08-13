@@ -39,7 +39,7 @@ def read_data(features_file, demographics_file):
     demo_df = pd.read_csv(open(demographics_file, 'rb'))
     data_df = pickle.load(open(features_file, 'rb'))
     data_df = pd.concat([demo_df, data_df], axis=1)
-    data_df = data_df.drop(columns='file_path_cat12.8')
+#    data_df = data_df.drop(columns='file_path_cat12.8')
     data_df.rename(columns=lambda X: str(X), inplace=True)  # convert numbers to strings as column names
     X = [col for col in data_df if col.startswith('f_')]
     y = 'age'
