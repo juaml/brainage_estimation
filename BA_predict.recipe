@@ -1,0 +1,47 @@
+Bootstrap: docker
+From: continuumio/miniconda3:latest
+
+%files
+	# copy brainage module and related files
+	brainage/ /opt/src/brainage/
+	setup.py /opt/src/
+	pyproject.toml /opt/src/
+	requirements.txt /opt/src/
+	entrypoint.sh /opt/scripts/
+
+%post
+
+	export PATH=/opt/conda/bin:$PATH
+
+	chmod 777 /tmp/
+    chmod 777 /opt/scripts/entrypoint.sh
+	
+	apt-get update --allow-releaseinfo-change
+    apt-get install -y --fix-missing libgomp1 wget dpkg 
+
+    
+	NOW=`date`
+	
+    # Initialize conda
+    conda --version
+
+	conda create --name BA_env -c conda-forge python=3.9.1 numpy==1.22.3 matplotlib==3.5.1 nibabel==3.2.2 nilearn==0.9.1 pandas==1.4.2 scipy==1.8.0 seaborn==0.11.2 xgboost==1.6.1 scikit-learn==1.0.2 glmnet
+	. /opt/conda/etc/profile.d/conda.sh
+ 	conda activate BA_env
+	pip install "julearn==0.2.5"
+	pip install git+https://github.com/JamesRitchie/scikit-rvm.git@master
+	cd /opt/src && pip install -e .
+
+
+%runscript
+    echo "Container was created $NOW"
+    echo "Arguments received: $*"
+
+    # Activate environment
+    conda init
+    . /opt/conda/etc/profile.d/conda.sh
+    conda activate BA_env
+
+    # Running entrypoint.sh
+    /opt/scripts/entrypoint.sh "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8"
+    echo "Computation finished!"
